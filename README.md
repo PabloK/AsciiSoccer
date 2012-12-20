@@ -1,5 +1,5 @@
 #AsciiSoccer
-Simple and fun soccer game for cygwin.
+Multiplayer ASCII-art soccer game for cygwin.
 
 ##Download Cygwin
 A link to cygwin http://cygwin.com/install.html installation page.
@@ -7,7 +7,7 @@ A link to cygwin http://cygwin.com/install.html installation page.
 ##Download Gnat
 Here is a link to http://libre.adacore.com/download/ where gnat can be downloaded.
 
-##Compileing
+##Compiling
 ```shell
 cd AsciiSoccer/TJa/lib/Win
 gnat compile -gnat95 ../../src/Win/*.adb
