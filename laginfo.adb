@@ -37,6 +37,7 @@ begin
    Lagnamnslista(5).B_Farg:=Red;
    Lagnamnslista(5).S_Farg:=White;
 
+-- TODO create more countries
 
    return Lagnamnslista;
 
