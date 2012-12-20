@@ -1,7 +1,7 @@
 #AsciiSoccer
 
 ##Download gnat here
-![http://libre.adacore.com/download/](http://libre.adacore.com/download/)
+[adacore]:(http://libre.adacore.com/download/)
 
 ##Compileing
 ```shell
