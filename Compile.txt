@@ -1,3 +1,0 @@
-gnat compile -gnat95 TJa/src/Solaris/*.adb
-gnat make -gnat95 -aLTJa/lib/Win -aITJa/src/Solaris -aOTJa/lib/Win AsciiSoccer/server.adb
-Ladda ner gnat 2012 här http://libre.adacore.com/download/
