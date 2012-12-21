@@ -1,4 +1,4 @@
-with Tja.Sockets, Ada.Text_IO, Ada.Integer_Text_IO, Spelarrorelse, Typer, Goal, Uppdatera_Klienter, Ada.Command_Line, Skicka_Info,Intro,Meny,Tja.Window.Elementary,Tja.Window.Text, Startpos, Skotta, Skottkoll;
+with Tja.Sockets, Ada.Text_IO, Ada.Integer_Text_IO, Spelarrorelse, Typer, Goal, Uppdatera_Klienter, Ada.Command_Line, Skicka_Info,Meny,Tja.Window.Elementary,Tja.Window.Text, Startpos, Skotta, Skottkoll;
 use Tja.Sockets, Ada.Text_IO, Ada.Integer_Text_IO, Typer, Ada.Command_Line,Tja.Window.Elementary,Tja.Window.text;
 
 procedure Server is
@@ -389,9 +389,6 @@ procedure Server is
    P_In_Arr          : Player_Task_Type;
 
 begin
-
-   --Intro
-   Intro;
 
    --Meny
    Meny_Res := Init_Meny(Game_Meny,Blue,Yellow,"Klar");
