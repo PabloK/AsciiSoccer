@@ -1,0 +1,28 @@
+!!!
+%html
+  %head
+    %script{:type => "text/javascript", :src  => "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"}
+  %body
+    #header
+    #stage
+    #footer
+:javascript
+  function connect(){
+    try{
+      var socket;
+      var host = "ws://0.0.0.0:8080";
+      var socket = new WebSocket(host);
+      socket.onopen = function(){
+        alert('Socket ready');
+      }
+      socket.onmessage = function(msg){
+        alert(msg.data);
+      }
+      socket.onclose = function(){
+        alert('Socket Closed');
+      }
+    } catch(exception){
+       alert("Socket initialization failed");
+    }
+  }
+  $(document).ready(function(){ connect(); });
