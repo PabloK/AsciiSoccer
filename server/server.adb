@@ -1,5 +1,30 @@
-with Tja.Sockets, Ada.Text_IO, Ada.Integer_Text_IO, Spelarrorelse, Typer, Goal, Uppdatera_Klienter, Ada.Command_Line, Skicka_Info, Meny, Tja.Window.Elementary, Tja.Window.Text, Startpos, Skotta, Skottkoll;
-use Tja.Sockets, Ada.Text_IO, Ada.Integer_Text_IO, Typer, Ada.Command_Line, Tja.Window.Elementary, Tja.Window.text;
+with Ada.Text_IO;
+with Ada.Integer_Text_IO;
+with Ada.Command_Line;
+
+with Tja.Sockets;
+with Tja.Window.Elementary;
+with Tja.Window.Text;
+
+with Spelarrorelse;
+with Typer;
+with Goal;
+with Uppdatera_Klienter;
+with Skicka_Info;
+with Meny;
+with Startpos;
+with Skotta;
+with Skottkoll;
+
+use Ada.Text_IO;
+use Ada.Integer_Text_IO;
+use Ada.Command_Line;
+
+use Tja.Sockets;
+use Tja.Window.Elementary;
+use Tja.Window.text;
+
+use Typer;
 
 procedure Server is
 
