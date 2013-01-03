@@ -3,8 +3,6 @@ with Ada.Integer_Text_IO;
 with Ada.Command_Line;
 
 with Tja.Sockets;
-with Tja.Window.Elementary;
-with Tja.Window.Text;
 
 with Spelarrorelse;
 with Typer;
@@ -21,8 +19,6 @@ use Ada.Integer_Text_IO;
 use Ada.Command_Line;
 
 use Tja.Sockets;
-use Tja.Window.Elementary;
-use Tja.Window.text;
 
 use Typer;
 
@@ -43,7 +39,7 @@ procedure Server is
     procedure Im_Ready;
     function Ready return Boolean;
     function is_game_finnished return Boolean;
-    procedure Set_Num_Of_Players (N : in Natural);
+    procedure SetNumberOfPlayers (N : in Natural);
     procedure Lagval (Lag    : in Integer;
 		      Player : in out integer);
     procedure Shoot_Is_Valid (Spelar_Nr : in Integer;
@@ -148,11 +144,11 @@ procedure Server is
 
     end Im_Ready;
 
-    procedure Set_Num_Of_Players (N : in natural) is
+    procedure SetNumberOfPlayers (N : in natural) is
 
     begin
       Antal_Spelare := N;
-    end Set_Num_Of_Players;
+    end SetNumberOfPlayers;
 
     procedure Lagval (Lag    : in Integer;
 		      Player : in out Integer) is
@@ -198,7 +194,6 @@ procedure Server is
   -------------------------------------------
   task Shoot is
     entry Skott (Riktning : in Integer);
-    entry Pass (Riktning : in Integer);
 
   end Shoot;
 
@@ -207,43 +202,33 @@ procedure Server is
     Val : Boolean;
   begin
 
-    loop
-      select
-	accept Skott (Riktning : in Integer) do
-	  Val := True;
-	  for I in 1 .. 5 loop
-	    if Val then
-	      Task_Com.Shoot (Riktning, Val);
-	      delay 0.15;
-	    end if;
-	  end loop;
-	end skott;
-      or
-	accept Pass (Riktning : in Integer) do
-	  Val := True;
-	  for I in 1 .. 3 loop
-	    if Val then
-	      Task_Com.Shoot (Riktning, Val);
-	      delay 0.2;
-	    end if;
-	  end loop;
-	end pass;
-      end select;
-    end loop;
+  loop
+    select
+	    accept Skott (Riktning : in Integer) do
+	      Val := True;
+	        for I in 1 .. 5 loop
+	          if Val then
+	            Task_Com.Shoot (Riktning, Val);
+	            delay 0.15;
+	          end if;
+	        end loop;
+	    end skott;
+    end select;
+  end loop;
   end Shoot;
 
   task type Com_In_Task is
-    entry Start (Tempsoc        : in Socket_Type;
-		 Temp_Spelar_Nr : in natural);
+    entry Start (TempSocket : in Socket_Type;
+		 TempPlayerNumber : in natural);
   end Com_In_Task;
 
   task body Com_In_Task is
 
     Socket           : Socket_Type;
-    Int, Lagnr        : Integer := 0;
+    Int, Lagnr       : Integer := 0;
     Spelar_Nr, L     : Natural;
-    Name             : String (1 .. 20);
-    Ch, Riktning      : Character;
+    Name             : String (1 .. 25);
+    Ch, Riktning     : Character;
     S                : String (1 .. 1);
     Valid            : Boolean;
     SkottR           : Integer;
@@ -251,20 +236,21 @@ procedure Server is
   begin
 
     select
-      accept Start (Tempsoc   : in Socket_Type;
-		    Temp_Spelar_Nr : in Natural) do
-	Socket := Tempsoc;
-	Spelar_Nr := Temp_Spelar_Nr;
-
+      accept Start (TempSocket   : in Socket_Type;
+		    TempPlayerNumber : in Natural) do
+	      Socket := TempSocket;
+	      Spelar_Nr := TempPlayerNumber;
       end Start;
 
     end select;
 
     if Spelar_Nr = 1 then
+      -- TODO create procedure for this?
       Get (Socket, Int); --Land
       Skip_Line (Socket);
       Lagnr := 1;
       Task_Com.Lagval (Int, lagnr);
+
     elsif  Spelar_Nr = 2 then
       Get (Socket, Int); --Land
       Skip_Line (Socket);
@@ -276,6 +262,7 @@ procedure Server is
     else
       Lagnr := 2;
     end if;
+
     Get_Line (Socket, Name, L);
 
     if L >= Name'Last then
@@ -284,7 +271,6 @@ procedure Server is
 
     Get (Socket, Ch);
     Skip_Line (Socket);
-
     Task_Com.Add_Data (Name, Spelar_Nr, Lagnr, Ch);
     Task_Com.Im_Ready;
 
@@ -295,24 +281,20 @@ procedure Server is
       Skip_Line (Socket);
 
       if Riktning = 'q' then
-	--Task_Com.Quit(Spelar_Nr);
-	--close(socket);
-	exit;
+        --TODO add quit option for player here
+	      --Task_Com.Quit(Spelar_Nr);
+	      --close(socket);
+	      exit;
       end if;
-      if Riktning = 's' then
-	Task_Com.Shoot_Is_Valid (Spelar_Nr, Valid, SkottR);
-	if Valid then
-	  Shoot.Skott (SkottR);
-	end if;
 
-      elsif Riktning = 'd' then
-	Task_Com.Shoot_Is_Valid (Spelar_Nr, Valid, SkottR);
-	if Valid then
-	  Shoot.Pass (SkottR);
-	end if;
+      if Riktning = 's' then
+	      Task_Com.Shoot_Is_Valid (Spelar_Nr, Valid, SkottR);
+	      if Valid then
+	        Shoot.Skott (SkottR);
+	      end if;
 
       else
-	Task_Com.Write_Player (Spelar_Nr, Integer'value (S));
+	      Task_Com.Write_Player (Spelar_Nr, Integer'value (S));
       end if;
 
     end loop;
@@ -323,8 +305,8 @@ procedure Server is
   -- Task to control changes in the game board
   ------------------------------------------------
   task Com_Out_Task is
-    entry Add (tempsoc       : in Socket_Type;
-	       tempspelarnr  : in Natural);
+    entry AddPlayer (TempSocket       : in Socket_Type;
+	       TempPlayerNumber  : in Natural);
     entry Init;
   end Com_Out_Task;
 
@@ -333,101 +315,77 @@ procedure Server is
     Player_Soc_Arr           : Player_Soc_Arr_Type;
     Antal_Spelare, Handelse  : Natural;
     Plan_Info                : Planinfo_Type;
-    Matchstart               : Boolean := false;
+    GameStarted              : Boolean := false;
 
   begin
-
+    -- The Game Loop
     loop
       select
 
-	accept Add (Tempsoc : in Socket_Type;
-	     Tempspelarnr : in Natural)do
+	      accept AddPlayer (TempSocket : in Socket_Type; TempPlayerNumber : in Natural) do
+          Player_Soc_Arr (TempPlayerNumber) := TempSocket;
+	        Antal_Spelare  := Antal_Spelare + 1;
+	      end AddPlayer;
 
-	  Player_Soc_Arr (Tempspelarnr) := Tempsoc;          -- Add player to the socket array
-	  Antal_Spelare  := Antal_Spelare + 1;
+	      or accept Init do
+	        Put_Line ("Staring Game");
+	        Task_Com.Read_Arr (Plan_Info, Handelse);
 
-	end Add;
+          -- Send game data to all players
+	        for I in 1 .. Antal_Spelare loop
+	          Skicka_Info (Player_Soc_Arr (I), Plan_Info, Antal_spelare);
+	        end loop;
 
-      or
+	        GameStarted := True;
+	      end Init;
 
-	-- Startar spelet
-	accept Init do
-
-	  Put ("Game Started!");
-	  Task_Com.Read_Arr (Plan_Info, Handelse);
-	  for I in 1 .. Antal_Spelare loop
-	    Skicka_Info (Player_Soc_Arr (I), Plan_Info, Antal_spelare);
-	  end loop;
-	  Matchstart := True;
-
-	end Init;
-
-      or
-	delay (0.04);
-	if Matchstart then
-	  Task_Com.Read_Arr (Plan_Info, Handelse);
-	  Uppdatera_Klienter (Player_Soc_Arr, Antal_Spelare, Plan_Info, Handelse);
-	end if;
-
+        or
+	        delay (0.04);
+	        if GameStarted then
+	          Task_Com.Read_Arr (Plan_Info, Handelse);
+	          Uppdatera_Klienter (Player_Soc_Arr, Antal_Spelare, Plan_Info, Handelse);
+	        end if;
       end select;
     end loop;
 
   end Com_Out_Task;
 
-  -- Meny
+  --------------------------------------------------------------------------------
+  type In_Type is Access Com_in_Task;              
+  type Player_Task_Type is array (1 .. 8) of In_Type;
 
-
-  package Game_Meny_package is
-    new Meny (4, 13, 2);
-  use Game_Meny_package;
-  Game_Meny : Meny_Type := ((65, 38, "Antalspelare:", (" 2           ", " 4           ", " 6           ", " 8           ")),
-			    (65, 40, "Portnummer:  ", (" 4000        ", " 4500        ", " 5000        ", " 5500        ")));
-
-
-
-  -----------------------------------------------------
-
-  type In_Type is Access Com_in_Task;              -- Pointer to the Task that handles information from players
-  type Player_Task_Type is array (1 .. 8) of In_Type; -- Keeps track of the player this task belongs to
-
-  Meny_Res           : Meny_Result_Type;
-  Lyssnare           : Listener_Type;
+  PlayerListner      : Listener_Type;
   Socket             : Socket_Type;
-  Valt_Antal_Spelare : natural;
-  P_In_Arr           : Player_Task_Type;
+  NumberOfPlayers    : natural;
+  Port               : natural;
+  PlayerTaskArray    : Player_Task_Type;
 
 begin
 
-  --Meny
-  Meny_Res := Init_Meny (Game_Meny, Blue, Yellow, "Klar");
-  Valt_Antal_Spelare := Meny_Res (1) * 2;
+  -- Setup game variables
+  -- TODO make command line parameter
+  NumberOfPlayers := 2; 
+  Port := 4000;
+  Task_Com.SetNumberOfPlayers (NumberOfPlayers);
 
+  Put_Line ("Waiting for connections");
+  Initiate (PlayerListner, (Port));
 
-  Task_Com.Set_Num_Of_Players (Valt_Antal_Spelare); -- Adds number of players to the game array.
+  for I in 1 .. NumberOfPlayers loop
+    Wait_For_Connection (PlayerListner, Socket);
+    Put_Line ("Connection established");
+    -- Create Taks to handle incoming messages from the player
+    PlayerTaskArray (I) := new Com_In_task;
+    PlayerTaskArray (I).Start (Socket, Natural (I));
+    -- Create a new task to handle outgoing messages
+    Com_Out_Task.AddPlayer (Socket, I);
 
-  New_Line;
-  Goto_XY (65, 44);
-  Set_Colours (Cyan, Black);
-  Put_Line ("Väntar på Klienter..");
-
-  -- Startar kommunikation
-  Initiate (Lyssnare, (Meny_Res (2) * 500 + 3500));
-
-
-  for I in 1 .. Valt_Antal_Spelare loop
-
-    Wait_For_Connection (Lyssnare, Socket);
-    Goto_XY (65, 46 + 2 * I);
-    Put_Line ("Ny spelare angame_overen");
+    -- TODO This establishes teamleaders
     if I = 1 or I = 2 then
       Put_Line (Socket, 1);
     else
       Put_line (Socket, 0);
     end if;
-
-    P_In_Arr (I) := new Com_In_task;
-    P_In_Arr (I).Start (Socket, Natural (I));
-    Com_Out_Task.Add (Socket, I);
 
   end loop;
 
