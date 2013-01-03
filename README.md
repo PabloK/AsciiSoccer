@@ -1,9 +1,9 @@
 #AsciiSoccer
 
 ##Download gnat here
-![http://libre.adacore.com/download/](http://libre.adacore.com/download/)
+http://libre.adacore.com/download/
 
-##Compileing
+##Compiling
 ```shell
 cd AsciiSoccer/TJa/lib/Win
 gnat compile -gnat95 ../../src/Win/*.adb
