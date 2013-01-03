@@ -1,7 +1,15 @@
 #AsciiSoccer
+Multiplayer ASCII-art soccer game for cygwin.
 
 ##Download gnat here
 http://libre.adacore.com/download/
+
+=======
+##Download Cygwin
+A link to cygwin http://cygwin.com/install.html installation page.
+
+##Download Gnat
+Here is a link to http://libre.adacore.com/download/ where gnat can be downloaded.
 
 ##Compiling
 ```shell
