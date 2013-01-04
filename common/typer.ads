@@ -10,18 +10,21 @@ use  Tja.Window.Graphic;
 package Typer is
 
 
- -------------------------
+   -----------------------
    -- Spelar och bollpost
    -----------------------
+   -- TODO fix names of variables
    type Spelar_Post is record
       X, Y, Lagnr, Spelar_Nr : Integer := 0;
       Namn        : String(1..20) := (others => ' ');
       Tecken : Character;
       Lagnamn: Natural;
+      NameLength : Natural;
    end record;
    ---------------------------
    -- Global array av posterna
    ---------------------------
+   -- TODO fix names of variables
    type Planinfo_Type is array(0..8) of Spelar_Post;
 
 

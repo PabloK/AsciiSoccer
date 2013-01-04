@@ -7,22 +7,30 @@
     #stage
     #footer
 :javascript
+  var socket;
   function connect(){
     try{
       var socket;
-      var host = "ws://0.0.0.0:8080";
+      var host = "ws://0.0.0.0:8080/#{rand(5)+1}";
       var socket = new WebSocket(host);
       socket.onopen = function(){
-        
+        console.log("Connecting");
+        socket.send("#{rand(4)+1}");
+        socket.send("#{"A"*(rand(6)+1)}");
+        socket.send("B");
       }
       socket.onmessage = function(msg){
-        alert(msg.data);
+        console.log(msg.data);
+        console.log(msg);
       }
       socket.onclose = function(){
-        alert('Socket Closed');
+        console.log("Connection closed");
       }
+      return socket;
     } catch(exception){
        alert("Socket initialization failed");
     }
   }
-  $(document).ready(function(){ connect(); });
+  $(document).ready(function(){ 
+    socket = connect(); 
+  });

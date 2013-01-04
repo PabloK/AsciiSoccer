@@ -17,27 +17,31 @@ EventMachine.run do
       ws.onopen {
         host = "pablo-N53SN"
         port = 4343          
-        game_server_socket = TCPSocket.open(host, port)
+        @game_server_socket = TCPSocket.open(host, port)
         @game_server_message_queue = EventMachine::Channel.new
-        @game_server_message_queue.subscribe {|msg| ws.send msg}
-        EventMachine.defer get_gameserver_messages
+        @queue = @game_server_message_queue.subscribe {|msg| ws.send msg}
   
-        get_gameserver_messages = proc do
-          while line = game_server_socket.gets
-            @game_server_message_queue.push line
+        get_gameserver_messages = proc do |ws|
+          puts ws
+          loop do
+            while line = @game_server_socket.gets
+              puts "Server -> Client: " + line 
+              @game_server_message_queue.push line
+            end
           end
         end
 
-        ws.send "Connection Established"
+        EventMachine.defer get_gameserver_messages
       }
 
       ws.onmessage { |msg|
-        game_server_socket.send(msg)
+        puts "Client -> Server: " + msg
+        @game_server_socket.puts(msg)
       }
 
       ws.onclose   {
-          @game_server_message_queue.unsubscribe
-          ws.send "Connection closed"
+          @game_server_message_queue.unsubscribe @queue
+          @game_server_socket.close()
       }
 
     end

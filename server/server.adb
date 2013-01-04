@@ -33,9 +33,11 @@ procedure Server is
     procedure Read_Arr (Plan_Info_ut : out PlanInfo_Type;
 			Handelse_ut  : out Natural);
     function Handelser return Integer;
-    procedure Add_Data (Namn                  : in String;
-			Spelarnummer, Lagnamn : in Integer;
-			Teck                  : in character);
+    procedure Add_Data (Namn           : in String;
+			                  Spelarnummer   : in Integer;
+                        Lagnamn        : in Integer;
+                        NameLength     : in Integer;
+			                  Teck           : in character);
     procedure Im_Ready;
     function Ready return Boolean;
     function is_game_finnished return Boolean;
@@ -53,7 +55,7 @@ procedure Server is
     Antal_Spelare  : Natural := 0;
     Num_Of_Players : Natural := 0;
     Antal_Ready    : Natural := 0;
-    Handelse       : Integer;
+    Handelse       : Integer := 0;
     Goal_1, Goal_2 : Natural := 0;
     Game_Over      : Boolean := False;
 
@@ -72,14 +74,11 @@ procedure Server is
       if (not (is_game_finnished)) then
 
 	Spelarrorelse (Spelarnummer, Plan_Info, Riktning, Antal_Spelare, Handelse);
+
 	if Handelse = 1 then
 	  Goal_1 := Goal_1 + 1;
-	  New_Line;
-	  Put ("Lag 1 gjorde mål!");
 	elsif  Handelse = 2 then
 	  Goal_2 := Goal_2 + 1;
-	  New_Line;
-	  Put ("Lag 2 gjorde mål!");
 	end if;
 
 	if Goal_2 > 2 then
@@ -117,29 +116,30 @@ procedure Server is
       return Handelse;
     end Handelser;
 
-    procedure Add_Data (Namn                  : in String;
-			Spelarnummer, Lagnamn : in Integer;
-			Teck                  : in character ) is
+    procedure Add_Data (Namn         : in String;
+			                  Spelarnummer : in Integer;
+                        Lagnamn      : in Integer;
+                        NameLength   : in Integer;
+			                  Teck         : in character ) is
     begin
-      Plan_Info (Spelarnummer).Namn := Namn;
-      Plan_Info (Spelarnummer).Spelar_Nr := Spelarnummer;
-      Plan_Info (Spelarnummer).Tecken := Teck;
+      Plan_Info(Spelarnummer).Namn := Namn;
+      Plan_Info(Spelarnummer).Spelar_Nr := Spelarnummer;
+      Plan_Info(Spelarnummer).Tecken := Teck;
+      Plan_Info(Spelarnummer).NameLength := NameLength;
       Num_Of_players := Num_Of_players + 1;
     end Add_Data;
 
     function Ready return Boolean is
-
     begin
       return Antal_Ready = Antal_Spelare;
     end Ready;
 
     Procedure Im_Ready is
-
     begin
 
       Antal_Ready := Antal_Ready + 1;
       if Ready then
-	Startpos (Plan_Info, Antal_Spelare);
+	      Startpos (Plan_Info, Antal_Spelare);
       end if;
 
     end Im_Ready;
@@ -224,14 +224,14 @@ procedure Server is
 
   task body Com_In_Task is
 
-    Socket           : Socket_Type;
-    Int, Lagnr       : Integer := 0;
-    Spelar_Nr, L     : Natural;
-    Name             : String (1 .. 25);
-    Ch, Riktning     : Character;
-    S                : String (1 .. 1);
-    Valid            : Boolean;
-    SkottR           : Integer;
+    Socket                    : Socket_Type;
+    Int, Lagnr                : Integer := 0;
+    Spelar_Nr, NameLength     : Natural;
+    Name                      : String (1 .. 20);
+    Ch, Riktning              : Character;
+    S                         : String (1 .. 1);
+    Valid                     : Boolean;
+    SkottR                    : Integer;
 
   begin
 
@@ -240,6 +240,8 @@ procedure Server is
 		    TempPlayerNumber : in Natural) do
 	      Socket := TempSocket;
 	      Spelar_Nr := TempPlayerNumber;
+        Put("Player Task");
+        Put(Spelar_Nr);
       end Start;
 
     end select;
@@ -250,12 +252,16 @@ procedure Server is
       Skip_Line (Socket);
       Lagnr := 1;
       Task_Com.Lagval (Int, lagnr);
+      Put("Lagnummer: ");
+      Put(Int);
 
     elsif  Spelar_Nr = 2 then
       Get (Socket, Int); --Land
       Skip_Line (Socket);
       Lagnr := 2;
       Task_Com.Lagval (Int, lagnr);
+      Put("Lagnummer: ");
+      Put(Int);
 
     elsif Spelar_Nr mod 2 = 0 then
       Lagnr := 1;
@@ -263,19 +269,25 @@ procedure Server is
       Lagnr := 2;
     end if;
 
-    Get_Line (Socket, Name, L);
+    Get_Line (Socket, Name, NameLength);
+    Put("Name: ");
+    Put_line(Name(1..NameLength));
 
-    if L >= Name'Last then
+    if NameLength >= Name'Last then
       Skip_Line (Socket);
     end if;
 
     Get (Socket, Ch);
     Skip_Line (Socket);
-    Task_Com.Add_Data (Name, Spelar_Nr, Lagnr, Ch);
+    
+    Put("Character: ");
+    Put(Ch);
+
+    Task_Com.Add_Data (Name, Spelar_Nr, Lagnr, NameLength, Ch);
     Task_Com.Im_Ready;
 
     loop
-
+      
       Get (Socket, Riktning);
       S (1) := Riktning;
       Skip_Line (Socket);
@@ -318,7 +330,6 @@ procedure Server is
     GameStarted              : Boolean := false;
 
   begin
-    -- The Game Loop
     loop
       select
 
@@ -328,11 +339,12 @@ procedure Server is
 	      end AddPlayer;
 
 	      or accept Init do
-	        Put_Line ("Staring Game");
+          Put_line ("Initiating Game");
 	        Task_Com.Read_Arr (Plan_Info, Handelse);
 
           -- Send game data to all players
 	        for I in 1 .. Antal_Spelare loop
+            Put_Line("Sending game info to all players");
 	          Skicka_Info (Player_Soc_Arr (I), Plan_Info, Antal_spelare);
 	        end loop;
 
@@ -380,7 +392,7 @@ begin
     -- Create a new task to handle outgoing messages
     Com_Out_Task.AddPlayer (Socket, I);
 
-    -- TODO This establishes teamleaders
+    -- This establishes teamleaders
     if I = 1 or I = 2 then
       Put_Line (Socket, 1);
     else
