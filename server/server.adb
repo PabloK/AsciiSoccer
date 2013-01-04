@@ -365,7 +365,7 @@ begin
   -- Setup game variables
   -- TODO make command line parameter
   NumberOfPlayers := 2; 
-  Port := 4000;
+  Port := 4343;
   Task_Com.SetNumberOfPlayers (NumberOfPlayers);
 
   Put_Line ("Waiting for connections");

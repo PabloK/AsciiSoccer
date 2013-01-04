@@ -13,7 +13,7 @@
       var host = "ws://0.0.0.0:8080";
       var socket = new WebSocket(host);
       socket.onopen = function(){
-        alert('Socket ready');
+        
       }
       socket.onmessage = function(msg){
         alert(msg.data);
