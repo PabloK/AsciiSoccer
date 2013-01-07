@@ -4,33 +4,68 @@
     %script{:type => "text/javascript", :src  => "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"}
   %body
     #header
-    #stage
+    #stage{:style => "width: 1000px; height: 600px; margin-left: auto; margin-right: auto; border:1px solid #000000;"}
+      %canvas{:id => "canvas", :width => 1000, :height => 600} 
     #footer
 :javascript
   var socket;
+  var game_court;
+  var canvas;
+  var ctx;
+  var collected_msg = "";
   function connect(){
     try{
       var socket;
       var host = "ws://0.0.0.0:8080/#{rand(5)+1}";
       var socket = new WebSocket(host);
       socket.onopen = function(){
-        console.log("Connecting");
+        // Create input method for the game
         socket.send("#{rand(4)+1}");
-        socket.send("#{"A"*(rand(6)+1)}");
-        socket.send("B");
+        socket.send("#{["Pablo","Kalle","Stina","Lisa","Nille","Jimmy"][rand(6)]}");
+        socket.send("#{["P","A","C","D","E","F"][rand(6)]}");
       }
       socket.onmessage = function(msg){
-        console.log(msg.data);
-        console.log(msg);
+        console.log(collected_msg.match(/start(.|[\n\r])*?end/));
+        if (collected_msg.match(/start(.|[\n\r])*?end/)) {
+          do_action(collected_msg);
+          collected_msg = collected_msg.replace(/start(.|[\n\r])*?end/,'')
+        }else{
+          collected_msg += msg.data;
+        }
       }
       socket.onclose = function(){
-        console.log("Connection closed");
+        //TODO disconnection info
       }
       return socket;
     } catch(exception){
        alert("Socket initialization failed");
     }
   }
+  function do_action(action){
+    console.log("Doing");
+  }
+  function draw_scale(){
+    for (var i=0;i<=30;i++)
+    { 
+      ctx.fillStyle="FF00FF";
+      if (i%2 == 0) {
+        ctx.fillStyle="0000FF";
+      }
+      ctx.fillRect(0,20*i,10,20);
+    }
+  }
+  function draw_court(){
+    ctx.fillStyle="3016b0";
+    ctx.fillRect(0,0,1000,600);
+    ctx.fillStyle="2DD700";
+    ctx.fillRect(10,20,980,560);
+    ctx.fillRect(0,20*12,10,20*6);
+    ctx.fillRect(990,20*12,10,20*6);
+    //draw_scale();
+  }
   $(document).ready(function(){ 
+    var canvas=document.getElementById("canvas");
+    ctx=canvas.getContext("2d");
+    draw_court();
     socket = connect(); 
   });

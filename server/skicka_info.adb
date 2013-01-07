@@ -14,24 +14,13 @@ procedure Skicka_Info(Socket                 : in Socket_Type;
 
 begin
 
-   Put(Antal_Spelare);
-   Put(Planinfo(1).LagNr);
-   Put(Planinfo(2).LagNr);
-
+   Put_line(Socket,"start");
+   Put_line(Socket,"game_setup");
    Put_line(Socket,Antal_Spelare);
    Put_line(Socket,Planinfo(1).LagNr);
    Put_line(Socket,Planinfo(2).LagNr);
 
    for I in 1..Antal_Spelare loop
-
-      Put(Planinfo(I).Namn(1..Planinfo(I).NameLength));
-      New_line;
-      Put(Planinfo(I).Tecken);
-      New_line;
-      Put(Planinfo(I).X);
-      New_line;
-      Put(Planinfo(I).Y);
-      New_line;
 
       Put_Line(Socket,Planinfo(I).Namn(1..Planinfo(I).NameLength));
       Put_Line(Socket,Planinfo(I).Tecken);
@@ -39,6 +28,8 @@ begin
       Put_line(Socket,Planinfo(I).Y);
 
    end loop;
+
+   Put_line(Socket,"end");
 
 end Skicka_Info;
 

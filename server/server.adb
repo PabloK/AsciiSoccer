@@ -240,8 +240,6 @@ procedure Server is
 		    TempPlayerNumber : in Natural) do
 	      Socket := TempSocket;
 	      Spelar_Nr := TempPlayerNumber;
-        Put("Player Task");
-        Put(Spelar_Nr);
       end Start;
 
     end select;
@@ -252,16 +250,12 @@ procedure Server is
       Skip_Line (Socket);
       Lagnr := 1;
       Task_Com.Lagval (Int, lagnr);
-      Put("Lagnummer: ");
-      Put(Int);
 
     elsif  Spelar_Nr = 2 then
       Get (Socket, Int); --Land
       Skip_Line (Socket);
       Lagnr := 2;
       Task_Com.Lagval (Int, lagnr);
-      Put("Lagnummer: ");
-      Put(Int);
 
     elsif Spelar_Nr mod 2 = 0 then
       Lagnr := 1;
@@ -270,8 +264,6 @@ procedure Server is
     end if;
 
     Get_Line (Socket, Name, NameLength);
-    Put("Name: ");
-    Put_line(Name(1..NameLength));
 
     if NameLength >= Name'Last then
       Skip_Line (Socket);
@@ -280,8 +272,6 @@ procedure Server is
     Get (Socket, Ch);
     Skip_Line (Socket);
     
-    Put("Character: ");
-    Put(Ch);
 
     Task_Com.Add_Data (Name, Spelar_Nr, Lagnr, NameLength, Ch);
     Task_Com.Im_Ready;
@@ -352,7 +342,7 @@ procedure Server is
 	      end Init;
 
         or
-	        delay (0.04);
+	        delay (0.25);
 	        if GameStarted then
 	          Task_Com.Read_Arr (Plan_Info, Handelse);
 	          Uppdatera_Klienter (Player_Soc_Arr, Antal_Spelare, Plan_Info, Handelse);
@@ -394,9 +384,13 @@ begin
 
     -- This establishes teamleaders
     if I = 1 or I = 2 then
+      Put_Line (Socket, "start");
       Put_Line (Socket, 1);
+      Put_Line (Socket, "end");
     else
+      Put_Line (Socket, "start");
       Put_line (Socket, 0);
+      Put_Line (Socket, "end");
     end if;
 
   end loop;
