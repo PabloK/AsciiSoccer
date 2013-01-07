@@ -8,86 +8,41 @@
       %canvas{:id => "canvas", :width => 1000, :height => 600} 
     #footer
 :javascript
-  var current_game;
+  var game_court;
   var canvas;
   var ctx;
   var socket;
   var collected_msg = "";
 
-  function player(name,character){
+  function person(name,color,character){
     this.character = character;
     this.name = name;
     this.color = "#000000";
     this.X = 0;
     this.Y = 0;
     this.setPosition = function(X,Y){
-      this.X = X;
-      this.Y = Y; 
-      console.log(this);
-    };
+    
+    }
     this.draw = function(){
-      null;
-    };
+
+    }
   }
   
   function action(str){
     var regex = /start.*\n(.*)?\n((.|[\n\r])*)end/g;
     var match = regex.exec(str);
+    console.log(str);
+    console.log(match);
     this.type = match[1] ;
     this.data = match[2].replace(/ /g,'').split("\n");
-    this.data.pop();
   }
-  
-  function game(arr) {
-    this.set_player = function(name, character){
-      temp_player = new player(name, character);
+
+  var game_settings = {
+    players: [],
+    set_player: function(){
+      temp_player = new player(name, color, character);
       this.players.push(temp_player);
-    };
-    this.update_game = function(arr){
-      console.log(arr);
-    };
-    this.draw = function(){
-      this.ball.draw();
-      //TOOD draw all players 
-    };
-    this.players =  [];
-    for (i=1;i <= arr[0];i++){
-      this.set_player(arr[3+(i-1)*4],arr[4+(i-1)*3]);
-    }
-    this.time = 90;
-    this.ball =  new player("ball","O");
-    this.ball.setPosition(50,15);
-    this.team_1_score = 0;
-    this.team_2_score = 0;
-    this.team_1_country = arr[1];
-    this.team_2_country = arr[2];
-  }
-
-  function do_action(str){
-    var tempAction = new action(str);
-    console.log("executing action:");
-    console.log(tempAction.type);
-    console.log("using data:");
-    console.log(tempAction.data);
-    
-    switch (tempAction.type)
-    {
-      case 'update_gameboard': current_game.update_game();
-        break;
-      case 'game_setup': current_game = new game(tempAction.data);
-        break;
-      default:  console.log("Unkown action");
-    }
-  }  
-
-  function draw_court(){
-    ctx.fillStyle="3016b0";
-    ctx.fillRect(0,0,1000,600);
-    ctx.fillStyle="2DD700";
-    ctx.fillRect(10,20,980,560);
-    ctx.fillRect(0,20*12,10,20*6);
-    ctx.fillRect(990,20*12,10,20*6);
-    //draw_scale();
+    },
   }
 
   function connect(){
@@ -115,8 +70,34 @@
        alert("Socket initialization failed");
     }
   }
-
-  $(document).ready(function(){
+  function do_action(str){
+    console.log("executing");
+    var tempAction = new action(str);
+    console.log("action type");
+    console.log(tempAction.type);
+    console.log("action data");
+    console.log(tempAction.data);
+  }
+  function draw_scale(){
+    for (var i=0;i<=30;i++)
+    { 
+      ctx.fillStyle="FF00FF";
+      if (i%2 == 0) {
+        ctx.fillStyle="0000FF";
+      }
+      ctx.fillRect(0,20*i,10,20);
+    }
+  }
+  function draw_court(){
+    ctx.fillStyle="3016b0";
+    ctx.fillRect(0,0,1000,600);
+    ctx.fillStyle="2DD700";
+    ctx.fillRect(10,20,980,560);
+    ctx.fillRect(0,20*12,10,20*6);
+    ctx.fillRect(990,20*12,10,20*6);
+    //draw_scale();
+  }
+  $(document).ready(function(){ 
     var canvas=document.getElementById("canvas");
     ctx=canvas.getContext("2d");
     draw_court();

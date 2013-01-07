@@ -385,10 +385,12 @@ begin
     -- This establishes teamleaders
     if I = 1 or I = 2 then
       Put_Line (Socket, "start");
+      Put_Line (Socket, "chose_country");
       Put_Line (Socket, 1);
       Put_Line (Socket, "end");
     else
       Put_Line (Socket, "start");
+      Put_Line (Socket, "chose_country");
       Put_line (Socket, 0);
       Put_Line (Socket, "end");
     end if;
