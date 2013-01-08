@@ -1,11 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.3.2)
-    em-websocket (0.3.8)
-      addressable (>= 2.1.1)
-      eventmachine (>= 0.12.9)
-    eventmachine (1.0.0)
     haml (3.1.4)
     rack (1.4.1)
     rack-protection (1.2.0)
@@ -20,7 +15,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  em-websocket
-  eventmachine
   haml
   sinatra

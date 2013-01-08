@@ -1,5 +1,3 @@
 source 'https://rubygems.org'
 gem "sinatra"
-gem "em-websocket"
-gem "eventmachine"
 gem "haml"
