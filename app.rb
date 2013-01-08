@@ -5,12 +5,7 @@ require 'thin'
 require 'haml'
 require 'socket'
 
-
 class App < Sinatra::Base
-    def quit!(a,b)
-      puts("test");
-      super(a,b)
-    end
     get '/' do
         haml :index
     end

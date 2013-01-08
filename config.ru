@@ -3,8 +3,8 @@ require './app'
 #
 # Server configuration
 #
-options = {:remote_host => 'asciisoccer.herokuapp.com', :remote_port => 4343}
-options = {:remote_host => 'pablo-N53SN', :remote_port => 4343}
+options = {:remote_host => 'pablo-N53SN', :remote_port => 5000}
+pid = spawn("./server.exe 2 #{options[:remote_port]}")
 
 #
 # Event machine proxy and sinatra Application
@@ -25,6 +25,6 @@ EventMachine.run do
       }
     }
   end
-
-  App.run!({:port => 3000})   
+  App.run!({:port => 3000})  
 end
+
