@@ -10,8 +10,8 @@ options = {:remote_host => 'pablo-N53SN', :remote_port => 5000}
 # Event machine proxy and sinatra Application
 #
 EventMachine.run do   
-
-  EventMachine::WebSocket.start(:host => '0.0.0.0', :port => $ENV['PORT']) do |ws|
+  
+  EventMachine::WebSocket.start(:host => '0.0.0.0', :port => ENV['PORT']) do |ws|
     ws.onopen {
       output = EM::Channel.new
       input = EM::Channel.new
