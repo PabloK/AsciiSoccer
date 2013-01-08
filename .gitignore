@@ -1,6 +1,5 @@
 *.ali
 *.o
-*.exe
 *.mp3
 *.*~
 TJa/bin/*
