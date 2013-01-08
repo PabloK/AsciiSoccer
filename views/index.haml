@@ -29,7 +29,7 @@
     this.draw = function(){
       //console.log(this);
       ctx.fillStyle=this.color;
-      ctx.fillRect(10*this.X,20*this.Y,10,20);
+      ctx.fillRect(10*(this.X-1),20*(this.Y-1),10,20);
     };
   }
   
@@ -142,4 +142,29 @@
     ctx=canvas.getContext("2d");
     draw_court();
     socket = connect(); 
+    $(window).keydown(function (e) {
+      switch(e.keyCode){
+        case 99: socket.send(3);
+        break;
+        case 98: socket.send(2);
+        break;
+        case 97: socket.send(1);
+        break;
+        case 102: socket.send(6);
+        break;
+        case 101: socket.send(5);
+        break;
+        case 100: socket.send(4);
+        break;
+        case 105: socket.send(9);
+        break;
+        case 104: socket.send(8);
+        break;
+        case 103: socket.send(7);
+        break;
+        case 83: socket.send('s');
+        break;
+        default: console.log("Undefined key: " + e.keyCode);
+      }
+    });
   });

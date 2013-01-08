@@ -81,13 +81,14 @@ procedure Server is
 	  Goal_2 := Goal_2 + 1;
 	end if;
 
-	if Goal_2 > 2 then
+  --TODO create game timer instead
+	if Goal_2 > 10 then
 
 	  Handelse := 4;
 	  Game_Over := True;
 	  --TODO end game in favour of team 2
 
-	elsif Goal_1 > 2 then
+	elsif Goal_1 > 10 then
 
 	  Handelse := 3;
 	  Game_Over := True;
@@ -342,7 +343,7 @@ procedure Server is
 	      end Init;
 
         or
-	        delay (0.25);
+	        delay (0.04);
 	        if GameStarted then
 	          Task_Com.Read_Arr (Plan_Info, Handelse);
 	          Uppdatera_Klienter (Player_Soc_Arr, Antal_Spelare, Plan_Info, Handelse);
