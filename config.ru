@@ -4,7 +4,7 @@ require './app'
 # Server configuration
 #
 options = {:remote_host => 'pablo-N53SN', :remote_port => 5000}
-pid = spawn("./server.exe 2 #{options[:remote_port]}")
+#pid = spawn("./server.exe 2 #{options[:remote_port]}")
 
 #
 # Event machine proxy and sinatra Application
