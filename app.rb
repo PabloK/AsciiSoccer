@@ -5,6 +5,9 @@ require 'thin'
 require 'haml'
 require 'socket'
 
+# Configuration of server
+options = {:remote_host => 'pablo-N53SN', :remote_port => 4343}
+pid = spawn('./server.exe 2 4343') unless pid
 
 class App < Sinatra::Base
     get '/' do
@@ -18,7 +21,7 @@ class ServerConnection < EventMachine::Connection
     super
     @input = input
     @output = output
-    @input_sid = @input.subscribe { |msg| send_data msg+ "\n"; puts msg; }
+    @input_sid = @input.subscribe { |msg| send_data msg+ "\n" }
   end
 
   def receive_data(msg)
@@ -30,9 +33,6 @@ class ServerConnection < EventMachine::Connection
   end
 
 end
-
-# Configuration of server
-options = {:remote_host => 'pablo-N53SN', :remote_port => 4343}
 
 EventMachine.run do   
 
@@ -56,3 +56,6 @@ EventMachine.run do
   App.run!({:port => 3000})   
 
 end
+
+
+ 

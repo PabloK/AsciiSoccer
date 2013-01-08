@@ -335,7 +335,6 @@ procedure Server is
 
           -- Send game data to all players
 	        for I in 1 .. Antal_Spelare loop
-            Put_Line("Sending game info to all players");
 	          Skicka_Info (Player_Soc_Arr (I), Plan_Info, Antal_spelare);
 	        end loop;
 
@@ -367,8 +366,8 @@ begin
 
   -- Setup game variables
   -- TODO make command line parameter
-  NumberOfPlayers := 8; 
-  Port := 4343;
+  NumberOfPlayers := Natural'Value(Argument(1)); 
+  Port := Natural'Value(Argument(2));
   Task_Com.SetNumberOfPlayers (NumberOfPlayers);
 
   Put_Line ("Waiting for connections");
