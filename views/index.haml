@@ -94,6 +94,13 @@
     
     switch (tempAction.type)
     {
+      case 'chose_country': 
+        if(tempAction.data == '1'){
+          socket.send("#{rand(4)+1}");
+        }
+        socket.send("#{["Pablo","Daniel","Olof","Lisa","Nille","Jimmy"][rand(6)]}");
+        socket.send("#{["P","A","C","D","E","F"][rand(6)]}");
+        break;
       case 'update_gameboard': current_game.update_game(tempAction.data);
         break;
       case 'game_setup': current_game = new game(tempAction.data);
@@ -117,9 +124,6 @@
       var socket = new WebSocket(host);
       socket.onopen = function(){
         // Create input method for the game
-        socket.send("#{rand(4)+1}");
-        socket.send("#{["Pablo","Daniel","Olof","Lisa","Nille","Jimmy"][rand(6)]}");
-        socket.send("#{["P","A","C","D","E","F"][rand(6)]}");
       }
       socket.onmessage = function(msg){
         collected_msg += msg.data;

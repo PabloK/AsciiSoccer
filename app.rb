@@ -18,7 +18,7 @@ class ServerConnection < EventMachine::Connection
     super
     @input = input
     @output = output
-    @input_sid = @input.subscribe { |msg| send_data msg+ "\n" }
+    @input_sid = @input.subscribe { |msg| send_data msg+ "\n"; puts msg; }
   end
 
   def receive_data(msg)
