@@ -5,11 +5,12 @@ require 'thin'
 require 'haml'
 require 'socket'
 
-# Configuration of server
-options = {:remote_host => 'asciisoccer.herokuapp.com', :remote_port => 4343}
-#pid = spawn('./server.exe 2 4343') unless pid
 
 class App < Sinatra::Base
+    def quit!(a,b)
+      puts("test");
+      super(a,b)
+    end
     get '/' do
         haml :index
     end
@@ -31,28 +32,5 @@ class ServerConnection < EventMachine::Connection
   def unbind
     @input.unsubscribe(@input_sid)
   end
-
-end
-
-EventMachine.run do   
-
-  EventMachine::WebSocket.start(:host => '0.0.0.0', :port => 8080) do |ws|
-    ws.onopen {
-      output = EM::Channel.new
-      input = EM::Channel.new
-
-      output_sid = output.subscribe { |msg| ws.send msg; }
-      
-      EventMachine::connect options[:remote_host], options[:remote_port], ServerConnection, input, output
-
-      ws.onmessage { |msg| input.push(msg)}
-
-      ws.onclose {
-        output.unsubscribe(output_sid)
-      }
-    }
-  end
-
-  App.run!({:port => 3000})   
 
 end
