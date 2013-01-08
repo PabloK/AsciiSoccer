@@ -6,8 +6,8 @@ require 'haml'
 require 'socket'
 
 # Configuration of server
-options = {:remote_host => 'pablo-N53SN', :remote_port => 4343}
-pid = spawn('./server.exe 2 4343') unless pid
+options = {:remote_host => 'asciisoccer.herokuapp.com', :remote_port => 4343}
+#pid = spawn('./server.exe 2 4343') unless pid
 
 class App < Sinatra::Base
     get '/' do
@@ -56,6 +56,3 @@ EventMachine.run do
   App.run!({:port => 3000})   
 
 end
-
-
- 
