@@ -21,5 +21,6 @@ PLATFORMS
 
 DEPENDENCIES
   em-websocket
+  eventmachine
   haml
   sinatra
