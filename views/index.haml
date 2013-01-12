@@ -125,7 +125,7 @@
 
   function connect(){
     try{
-      var host = "ws://ec2-184-73-165-101.compute-1.amazonaws.com:8080";
+      var host = "ws://ec2-184-73-165-101.compute-1.amazonaws.com:8080/#{port}";
       var socket = new WebSocket(host);
       socket.onopen = function(){
         // Create input method for the game
