@@ -7,7 +7,7 @@ class App < Sinatra::Base
         haml :index
     end
     get '/:port' do
-        port = params[:port]
+        @port = params[:port]
         haml :index
     end
 end
