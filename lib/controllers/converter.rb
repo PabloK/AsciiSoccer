@@ -13,6 +13,7 @@ class SassCssConverter < Sinatra::Base
 end
 
 class CoffeeJsConverter < Sinatra::Base
+    Tilt::CoffeeScriptTemplate.default_bare = true
     set :views, File.dirname(__FILE__) + "/../../assets/js"
     get '/*.js' do
       content_type 'text/javascript', :charset => 'utf-8'
