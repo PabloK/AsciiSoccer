@@ -68,8 +68,8 @@ do_action = (str) ->
     when "chose_country"
       socket.send "#{rand(4)+1}"  if tempAction.data is "1"
       
-      socket.send("#{['Pablo',"Daniel","Olof","Lisa","Nille","Jimmy"][rand(6)]}");
-      socket.send("#{["P","A","C","D","E","F"][rand(6)]}");
+      socket.send("Pablo");
+      socket.send("P");
     when "update_gameboard"
       current_game.update_game tempAction.data
     when "game_setup"
@@ -89,7 +89,8 @@ draw_court = ->
 #Initiate server contact
 connect = ->
   try
-    host = "ws://107.22.250.184:8080/#{@port}"
+    #TODO fix the port to a global var
+    host = "ws://107.22.250.184:8080/4001"
     socket = new WebSocket(host)
     socket.onopen = ->
 
