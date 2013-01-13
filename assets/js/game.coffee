@@ -66,7 +66,7 @@ do_action = (str) ->
   tempAction = new parse_action(str)
   switch tempAction.type
     when "chose_country"
-      socket.send "#{rand(4)+1}"  if tempAction.data is "1"
+      socket.send Math.floor(Math.random()*4)  if tempAction.data is "1"
       
       socket.send("Pablo");
       socket.send("P");
