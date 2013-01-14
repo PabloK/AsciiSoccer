@@ -20,8 +20,10 @@ class Player
 class Connect 
   constructor: (port) ->
     try
-      #TODO add the port as a variable trough haml
+      unless /^40[0-9]{2}$/g.test(port)
+        throw "Port outside server port range" 
       host = "ws://107.22.250.184:8080/" + port
+      console.log("connecting to host: " + host)
       socket = new WebSocket(host)
       socket.onopen = ->
 
@@ -134,12 +136,18 @@ country_colors = ["#FFFFFF", "#FF0000", "#FFFF00", "#FF00FF", "00FFFF"]
 
 #Initiate game and more
 $(document).ready ->
+  
+  config = []
+  for element in $("#gameConfig").children()
+    jQElement = $(element)
+    config[jQElement.attr('id')] = jQElement.text()
+
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")
 
   #Initiating game
   current_game = new Game()
-  current_game.init_socket(4001)
+  current_game.init_socket(config['port'])
 
   #Handling Input
   $(window).keydown (e) ->
