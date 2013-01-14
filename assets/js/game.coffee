@@ -18,11 +18,11 @@ class Player
 
 # Connect to the game server
 class Connect 
-  constructor: (port) ->
+  constructor: (server,port) ->
     try
       unless /^40[0-9]{2}$/g.test(port)
         throw "Port outside server port range" 
-      host = "ws://107.22.250.184:8080/" + port
+      host = server+ port
       console.log("connecting to host: " + host)
       socket = new WebSocket(host)
       socket.onopen = ->
@@ -52,6 +52,8 @@ parse_action = (str) ->
 class Game
   constructor: () ->
     @collected_msg = ""
+    @team_1_score_display = $("#team1")
+    @team_2_score_display = $("#team2")
     @team_1_score = 0
     @team_2_score = 0
     @ball = new Player("ball", "O")
@@ -86,8 +88,16 @@ class Game
     while i < @players.length
       @players[i].setPosition arr[i * 2 + 2], arr[3 + i * 2]
       i++
-    this.team_1_score += 1  if arr[arr.length] is "1"
-    this.team_2_score += 1  if arr[arr.length] is "2"
+
+    # TODO an error exists within scorecounting might be a message fault
+    if arr[arr.length-1] == "1"
+      @team_1_score++ 
+      @team_1_score_display.text(@team_1_score)
+
+    if arr[arr.length-1] == "2"    
+      @team_2_score++  
+      @team_2_score_display.text(@team_2_score)
+
     draw_court()
     @draw()
 
@@ -99,8 +109,8 @@ class Game
       @players[i].draw()
       i++
 
-  init_socket: (port) -> 
-    @socket = new Connect(port)
+  init_socket: (server,port) -> 
+    @socket = new Connect(server,port)
 
 
 #Execute actions from the server as they arrive
@@ -137,17 +147,19 @@ country_colors = ["#FFFFFF", "#FF0000", "#FFFF00", "#FF00FF", "00FFFF"]
 #Initiate game and more
 $(document).ready ->
   
+  canvas = document.getElementById("canvas")
+  ctx = canvas.getContext("2d")
+
   config = []
+  config['host'] = "ws://107.22.250.184:8080/"
   for element in $("#gameConfig").children()
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
 
-  canvas = document.getElementById("canvas")
-  ctx = canvas.getContext("2d")
 
   #Initiating game
   current_game = new Game()
-  current_game.init_socket(config['port'])
+  current_game.init_socket(config['host'],config['port'])
 
   #Handling Input
   $(window).keydown (e) ->

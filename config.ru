@@ -1,6 +1,8 @@
 require './config/environment'
 require './lib/controllers'
 
+puts ENV['RACK_ENV']
+
 class Sinatra::Base
   set :views, File.dirname(__FILE__) + "/views"
 end
