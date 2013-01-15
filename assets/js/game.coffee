@@ -16,6 +16,14 @@ class Player
     ctx.fillStyle = @color
     ctx.fillRect 10 * (@X - 1), 20 * (@Y - 1), 10, 20
 
+class Ball extends Player
+  constructor: (name, character, color) ->
+    super(name, character, color)
+
+  draw: ->
+    ctx.fillStyle = @color
+    ctx.fillRect 10 * (@X - 1), 20 * (@Y - 1)+5, 10, 10
+
 # Connect to the game server
 class Connect 
   constructor: (server,port) ->
@@ -29,7 +37,7 @@ class Connect
 
       socket.onmessage = (msg) ->
         current_game.collected_msg += msg.data
-        if current_game.collected_msg.match(/start(.|[\n\r])*?end/)
+        if current_game.collected_msg.match(/>>(.|[\n\r])*?<</)
           do_action current_game.collected_msg
           current_game.collected_msg = ""
 
@@ -42,7 +50,7 @@ class Connect
 
 #Parse an action from the server stream
 parse_action = (str) ->
-  regex = /start.*\n(.*)?\n((.|[\n\r])*)end/g
+  regex = />>.*\n(.*)?\n((.|[\n\r])*)<</g
   match = regex.exec(str)
   @type = match[1]
   @data = match[2].replace(RegExp(" ", "g"), "").split("\n")
@@ -52,11 +60,13 @@ parse_action = (str) ->
 class Game
   constructor: () ->
     @collected_msg = ""
+    @time = 0
+    @time_display = $("#time")
     @team_1_score_display = $("#team1")
     @team_2_score_display = $("#team2")
     @team_1_score = 0
     @team_2_score = 0
-    @ball = new Player("ball", "O")
+    @ball = new Ball("Ball", "O")
     @players = []
     @team_1_country = undefined
     @team_1_country = undefined
@@ -84,20 +94,19 @@ class Game
   # Update game action
   update_game: (arr) ->
     @ball.setPosition arr[0], arr[1]
+    # TODO an error exists within scorecounting might be a message fault
+    @team_1_score = arr[arr.length-3]
+    @team_2_score = arr[arr.length-2]
+    @time = arr[arr.length-4]
+    @time_display.text(90 - Math.floor(@time/20))
+    @team_1_score_display.text(@team_1_score)
+    @team_2_score_display.text(@team_2_score)
+
     i = 0
     while i < @players.length
       @players[i].setPosition arr[i * 2 + 2], arr[3 + i * 2]
       i++
-
-    # TODO an error exists within scorecounting might be a message fault
-    if arr[arr.length-1] == "1"
-      @team_1_score++ 
-      @team_1_score_display.text(@team_1_score)
-
-    if arr[arr.length-1] == "2"    
-      @team_2_score++  
-      @team_2_score_display.text(@team_2_score)
-
+    
     draw_court()
     @draw()
 
@@ -116,26 +125,28 @@ class Game
 #Execute actions from the server as they arrive
 do_action = (str) ->
   tempAction = new parse_action(str)
+  console.log(tempAction.data)
   switch tempAction.type
-    when "chose_country"
-      current_game.socket.send Math.floor(Math.random()*4)  if tempAction.data[0] is "1"
+    when "chose"
+      current_game.socket.send Math.floor(Math.random()*4+1)  if tempAction.data[0] is "1"
       current_game.socket.send("Pablo")
       current_game.socket.send("P")
-    when "update_gameboard"
+    when "update"
       current_game.update_game tempAction.data
-    when "game_setup"
+    when "setup"
       current_game.setup(tempAction.data)
     else
       null
 
 #Draw the court
 draw_court = ->
-  ctx.fillStyle = "3016b0"
-  ctx.fillRect 0, 0, 1000, 600
-  ctx.fillStyle = "2DD700"
-  ctx.fillRect 10, 20, 980, 560
-  ctx.fillRect 0, 20 * 12, 10, 20 * 6
-  ctx.fillRect 990, 20 * 12, 10, 20 * 6
+  ctx.fillStyle = "2DF700";
+  ctx.fillRect(0, 0, 1000, 600);
+  ctx.fillStyle = "FAFAFA";
+  ctx.fillRect(20, 20, 960, 560);
+  ctx.fillStyle = "2DD700";
+  ctx.fillRect(22, 22, 956, 556);
+  ctx.fillRect(0, 20 * 12, 1000, 20*6);
 
 #The game variables
 current_game = undefined
@@ -155,7 +166,6 @@ $(document).ready ->
   for element in $("#gameConfig").children()
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
-
 
   #Initiating game
   current_game = new Game()

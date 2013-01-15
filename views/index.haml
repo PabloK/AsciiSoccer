@@ -10,7 +10,11 @@
       -if ENV['RACK_ENV'] == "development"
         #host ws://pablo-N53SN:8080/
   %body
-    #header
+    #timebox
+      %center
+        %span#time 90
+        %span :
+        %span 00
     #stage
       %canvas{:id => "canvas", :width => 1000, :height => 600} 
     #score
