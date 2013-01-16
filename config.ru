@@ -1,12 +1,6 @@
 require './config/environment'
 require './lib/controllers'
 
-puts ENV['RACK_ENV']
-
-class Sinatra::Base
-  set :views, File.dirname(__FILE__) + "/views"
-end
- 
 map '/' do
 
   map '/css' do
@@ -22,8 +16,13 @@ map '/' do
     :urls => ["/images", "/favicon.ico", "/robots.txt"],
     :cache_control => "public,max-age=#{365 * 24 * 3600}"
   }
+  use Rack::Session::Cookie, :secret => ENV['SESSION_ SECRET'], :expire_after => 30 * 3600
 
   map '/' do
+    run Portal
+  end
+
+  map '/game' do
     run Game
   end
 end 

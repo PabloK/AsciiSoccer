@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'sinatra/base'
 require 'sass'
 require 'coffee-script'
 
