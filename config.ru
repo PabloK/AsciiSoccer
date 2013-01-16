@@ -16,7 +16,7 @@ map '/' do
     :urls => ["/images", "/favicon.ico", "/robots.txt"],
     :cache_control => "public,max-age=#{365 * 24 * 3600}"
   }
-  use Rack::Session::Cookie, :secret => ENV['SESSION_ SECRET'], :expire_after => 30 * 3600
+  use Rack::Session::Cookie, :secret => ENV['SESSION_SECRET'], :expire_after => 30 * 3600
 
   map '/' do
     run Portal
