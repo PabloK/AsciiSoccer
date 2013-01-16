@@ -3,6 +3,13 @@ require './lib/controllers'
 
 map '/' do
 
+  use Rack::Static, {
+    :root => "public",
+    :urls => ["/images", "/favicon.ico", "/robots.txt"],
+    :cache_control => "public,max-age=#{365 * 24 * 3600}"
+  }
+  use Rack::Session::Cookie, :secret => ENV['SESSION_SECRET'], :expire_after => 30 * 3600
+
   map '/css' do
     run SassCssConverter
   end
@@ -11,18 +18,11 @@ map '/' do
     run CoffeeJsConverter
   end
 
-  use Rack::Static, {
-    :root => "public",
-    :urls => ["/images", "/favicon.ico", "/robots.txt"],
-    :cache_control => "public,max-age=#{365 * 24 * 3600}"
-  }
-  use Rack::Session::Cookie, :secret => ENV['SESSION_SECRET'], :expire_after => 30 * 3600
-
   map '/' do
-    run Portal
+    run PortalController
   end
 
   map '/game' do
-    run Game
+    run GameController
   end
 end 

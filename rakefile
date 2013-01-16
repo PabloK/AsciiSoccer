@@ -1,0 +1,8 @@
+require './config/environment'
+require './lib/models'
+require 'dm-migrations'
+
+desc "Recreate database from DataMapper model"
+task :migrate do
+  DataMapper.auto_migrate!   
+end

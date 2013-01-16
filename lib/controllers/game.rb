@@ -1,6 +1,6 @@
 require 'haml'
 
-class Game < Sinatra::Base
+class GameController < Sinatra::Base
     get '/:port' do
         @port = params[:port]
         haml :game, :layout => false
