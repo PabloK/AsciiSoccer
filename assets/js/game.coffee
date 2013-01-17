@@ -31,7 +31,6 @@ class Connect
       unless /^40[0-9]{2}$/g.test(port)
         throw "Port outside server port range" 
       host = server+ port
-      console.log("connecting to host: " + host)
       socket = new WebSocket(host)
       socket.onopen = ->
 
@@ -125,7 +124,6 @@ class Game
 #Execute actions from the server as they arrive
 do_action = (str) ->
   tempAction = new parse_action(str)
-  console.log(tempAction.data)
   switch tempAction.type
     when "chose"
       current_game.socket.send Math.floor(Math.random()*4+1)  if tempAction.data[0] is "1"
@@ -137,6 +135,33 @@ do_action = (str) ->
       current_game.setup(tempAction.data)
     else
       null
+
+#Helper function to give smooth key press
+holdit = (btn, action, start, speedup) ->
+  t = undefined
+  time = start
+  repeat = ->
+    action()
+    t = setTimeout(repeat, time + 50)
+    time = time / speedup
+
+  btn.mousedown(() ->
+    repeat()
+  )
+
+  btn.mouseup(() ->
+    clearTimeout t
+    time = start
+  )
+
+  btn.mouseout(() ->
+    clearTimeout t
+    time = start
+  )
+  btn.mouseleave(() ->
+    clearTimeout t
+    time = start
+  )
 
 #Draw the court
 draw_court = ->
@@ -155,11 +180,13 @@ ctx = undefined
 socket = undefined
 country_colors = ["#FFFFFF", "#FF0000", "#FFFF00", "#FF00FF", "#00FFFF"]
 
+
 #Initiate game and more
 $(document).ready ->
   
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")
+
 
   config = []
   config['host'] = "ws://54.228.243.154:8080/"
@@ -170,6 +197,18 @@ $(document).ready ->
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])
+
+  if $("#onscreenkeyboard").length != 0 
+    console.log("yes")
+    holdit($("#upleft"), (() -> current_game.socket.send(7)),  300,3)  
+    holdit($("#up"), (() -> current_game.socket.send(8)),      300,3)  
+    holdit($("#upright"),(() -> current_game.socket.send(9)),  300,3)  
+    holdit($("#left"),(() -> current_game.socket.send(4)),     300,3)  
+    holdit($("#right"),(() -> current_game.socket.send(6)) ,   300,3)  
+    holdit($("#downleft"),(() -> current_game.socket.send(1)), 300,3)  
+    holdit($("#down"),(() -> current_game.socket.send(2)),     300,3)  
+    holdit($("#downright"),(() -> current_game.socket.send(3)),300,3)  
+
 
   #Handling Input
   $(window).keydown (e) ->

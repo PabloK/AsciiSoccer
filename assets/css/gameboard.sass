@@ -37,21 +37,37 @@ body
   border-bottom-width: 0px
 
 #onscreenkeyboard
-  background-color: #000
-  width: 300px
-  height: 300px
+  background-color: $color-light
+  width: 320px
+  padding: 0px
   margin-left: auto
   margin-right: auto
-  border: 3px solid $color-white
-  border-top-width: 0px
+  margin-bottom: 2em
+  margin-top: 2em
 
 #onscreenkeyboard button
   display: inline-block
   width: 90px
   height: 90px
-  border: 0
-  margin: 0
-  padding: 2px
+  border: 0px
+  margin: 0px
+  margin-left: 5px
+  margin-bottom: 10px
+  border-radius: 4px
+  font-family: 'Press Start 2P', cursive
+  font-size: 1.5em
+  color: $color-white
+  background-color: $color-gray
+  border: 0px solid $color-black
+  display: inline-block
+  text-align: center
+  cursor: pointer
+  -moz-box-shadow: 3px 3px $color-black
+  -webkit-box-shadow: 3px 3px $color-black
+  box-shadow: 3px 3px $color-black
+
+#onscreenkeyboard button:active
+  background-color: $color-accent
 
 @media only screen and (-webkit-device-pixel-ratio:1.5)
   #onscreenkeyboard
@@ -61,3 +77,6 @@ body
 
 @media only screen and (-webkit-device-pixel-ratio:1)
   #onscreenkeyboard
+
+.hidden
+  visibility: hidden
