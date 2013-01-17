@@ -10,6 +10,12 @@ h1
   text-shadow: $color-black 0.1em 0.1em 0.1em
   position: relative
 
+p
+  line-height: 1.5em
+  font-size: 0.8em
+  padding: 10px
+  text-shadow: $color-gray 0.1em 0.1em 0.1em
+
 .shadow
   padding-bottom: 10px
 
@@ -39,6 +45,11 @@ h1
   color: $color-shadow
   margin-bottom: 0.5em
 
+#signup
+  padding: 15px
+  font-size: 2em
+  background-color: #CC0000
+
 h2
   font-size: 1.5em
   padding: 10px
@@ -50,10 +61,6 @@ h2
   -moz-box-shadow: -7px 7px $color-shadow
   -webkit-box-shadow: -7px 7px $color-shadow
   box-shadow: -7px 7px $color-shadow
-
-p
-  font-size: 0.8em
-  padding: 10px
 
 #logo
   width: 100%
@@ -91,9 +98,12 @@ button:hover
   color: $color-accent
   background-color: #454577
 
+button.inactive
+  color: #999
+
 button.inactive:hover
-  color: $color-white
   background-color: $color-gray
+  color: #999
 
 input, input:active
   border: 3px solid $color-white
