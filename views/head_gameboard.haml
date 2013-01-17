@@ -3,7 +3,7 @@
 %link{:rel => 'stylesheet', :type => 'text/css', :href => '/css/gameboard.css'}
 %link{:href => "http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic", :rel => "stylesheet", :type => "text/css"}
 %meta{:content => "target-densitydpi=device-dpi, initial-scale=1.0, user-scalable=no", :name => "viewport"}/
-  #gameConfig
-    #port=@port
-    -if ENV['RACK_ENV'] == "development"
-      #host ws://pablo-N53SN:8080/
+#gameConfig
+  #port=@port
+  -if ENV['RACK_ENV'] == "development"
+    #host ws://pablo-N53SN:8080/
