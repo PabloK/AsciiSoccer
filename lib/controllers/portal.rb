@@ -13,7 +13,8 @@ class PortalController < Sinatra::Base
       haml :index
     end
     
-    get 'registered' do
+    get '/registered/:id' do
+      @user = User.get(params[:id])
       haml :registered
     end
 end

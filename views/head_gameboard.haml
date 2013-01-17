@@ -1,0 +1,9 @@
+%script{:type => "text/javascript", :src  => "https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"}
+%script{:type => "text/javascript", :src  => "/js/game.js"}
+%link{:rel => 'stylesheet', :type => 'text/css', :href => '/css/styles.css'}
+%link{:rel => 'stylesheet', :type => 'text/css', :href => '/css/gameboard.css'}
+%link{:href => "http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic", :rel => "stylesheet", :type => "text/css"}
+  #gameConfig
+    #port=@port
+    -if ENV['RACK_ENV'] == "development"
+      #host ws://pablo-N53SN:8080/

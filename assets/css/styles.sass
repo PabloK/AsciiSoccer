@@ -1,5 +1,8 @@
+$color-white:  #ffffff
+$color-black:  #000000
 $color-light:  #3b9f3b
 $color-dark:   #1b9fae
+$color-shadow: #354535
 $color-accent: #D3D32b
 $color-text:   #ffffff
   
@@ -11,21 +14,25 @@ body
 .accent-text
   color: $color-accent
 
-#signup
-  width: 300px
+.box
   padding: 20px
-  margin-top: 50px
   margin-left: auto
   margin-right: auto
   text-align: center
-  border: 5px solid #FFF
-  -moz-box-shadow: 8px 7px #354535
-  -webkit-box-shadow: 7px 7px #354535
-  box-shadow: 7px 7px #354535
+  border: 5px solid $color-white
+  -moz-box-shadow: 8px 7px $color-shadow
+  -webkit-box-shadow: 7px 7px $color-shadow
+  box-shadow: 7px 7px $color-shadow
+
+.message
+  width: 600px
+
+.form
+  width: 400px
 
 label
-  text-shadow: #000 0.1em 0.1em 0.1em
-  color: #FFF
+  text-shadow: $color-black 0.1em 0.1em 0.1em
+  color: $color-white
   padding: 0.5em
   padding-top: 1em
   display: block
@@ -34,55 +41,24 @@ button
   padding: 20px
   font-family: 'Press Start 2P', cursive
   font-size: 1.5em
-  color: #FFF
+  color: $color-white
   background-color: $color-light
-  border: 0px solid #000
+  border: 0px solid $color-black
   display: block
   margin-left: auto
   margin-right: auto
   text-align: center
   cursor: pointer
-  text-shadow: #000 0.1em 0.1em 0.1em
+  text-shadow: $color-black 0.1em 0.1em 0.1em
 
 button:hover
   color: $color-accent
 
-#stage
-  background-color: #000
-  width: 1000px
-  height: 600px
-  margin-left: auto
-  margin-right: auto
-  border: 3px solid #FFF
-
-#score
-  padding-top: 20px
-  padding-bottom: 20px
-  background-color: #000
-  width: 500px
-  margin-left: auto
-  margin-right: auto
-  border: 3px solid #FFF
-  border-top-width: 0px
-
-#gameConfig
-  display: none
-
-#timebox
-  padding-top: 20px
-  padding-bottom: 20px
-  background-color: #000
-  width: 300px
-  margin-left: auto
-  margin-right: auto
-  border: 3px solid #FFF
-  border-bottom-width: 0px
-
 input, input:active
-  border: 3px solid #FFF
+  border: 3px solid $color-white
   width: 250px
   height: 20px
-  color: #FFF
+  color: $color-white
   background-color: $color-light
   font-size: 0.7em
   font-family: 'Press Start 2P', cursive
