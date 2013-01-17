@@ -2,6 +2,9 @@
 %script{:type => "text/javascript", :src  => "/js/game.js"}
 %link{:rel => 'stylesheet', :type => 'text/css', :href => '/css/gameboard.css'}
 %link{:href => "http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic", :rel => "stylesheet", :type => "text/css"}
+%meta{:name=> "viewport" , :content=>"width=device-width, maximum-scale=1, user-scalable=0"}
+%meta{:name=> "viewport" , :content=>"width=device-width, maximum-scale=1, user-scalable=no"}
+
 #gameConfig
   #port=@port
   -if ENV['RACK_ENV'] == "development"
