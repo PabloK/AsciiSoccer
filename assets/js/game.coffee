@@ -140,11 +140,11 @@ do_action = (str) ->
 
 #Draw the court
 draw_court = ->
-  ctx.fillStyle = "2DF700";
+  ctx.fillStyle = "#2DF700";
   ctx.fillRect(0, 0, 1000, 600);
-  ctx.fillStyle = "FAFAFA";
+  ctx.fillStyle = "#FAFAFA";
   ctx.fillRect(20, 20, 960, 560);
-  ctx.fillStyle = "2DD700";
+  ctx.fillStyle = "#2DD700";
   ctx.fillRect(22, 22, 956, 556);
   ctx.fillRect(0, 20 * 12, 1000, 20*6);
 
