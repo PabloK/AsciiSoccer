@@ -153,7 +153,7 @@ current_game = undefined
 canvas = undefined
 ctx = undefined
 socket = undefined
-country_colors = ["#FFFFFF", "#FF0000", "#FFFF00", "#FF00FF", "00FFFF"]
+country_colors = ["#FFFFFF", "#FF0000", "#FFFF00", "#FF00FF", "#00FFFF"]
 
 #Initiate game and more
 $(document).ready ->
