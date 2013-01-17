@@ -4,7 +4,7 @@ require 'data_mapper'
 
 class  Sinatra::Base
   if ENV['RACK_ENV'] == 'production'
-      set :haml, { :ugly=>true }
+      set :haml, { :ugly => true }
       set :clean_trace, true
   end
 

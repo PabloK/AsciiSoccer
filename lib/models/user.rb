@@ -5,6 +5,6 @@ class User
   property :name,     String
   property :email,    String, :required => true, :unique => true
   property :password, String, :required => true
-  property :color,    String, :length => 6, :default => "903c3b"
+  property :color,    String, :length => 7, :default => "#903c3b"
 
 end

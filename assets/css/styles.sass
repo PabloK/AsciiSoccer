@@ -1,26 +1,24 @@
-$color-white:  #ffffff
-$color-black:  #000000
-$color-light:  #3b9f3b
-$color-dark:   #1b9fae
-$color-shadow: #354535
-$color-accent: #D3D32b
-$color-text:   #ffffff
-  
+@import "color"
+
 body 
   background-color: $color-light
   color: $color-text
   font-family: 'Press Start 2P', cursive
 
-.accent-text
-  color: $color-accent
+h1
+  padding-top: 20px
+  text-shadow: $color-black 0.1em 0.1em 0.1em
+  position: relative
+
+.shadow
+  padding-bottom: 10px
 
 .box
-  padding: 20px
   margin-left: auto
   margin-right: auto
   text-align: center
   border: 5px solid $color-white
-  -moz-box-shadow: 8px 7px $color-shadow
+  -moz-box-shadow: 7px 7px $color-shadow
   -webkit-box-shadow: 7px 7px $color-shadow
   box-shadow: 7px 7px $color-shadow
 
@@ -30,6 +28,41 @@ body
 .form
   width: 400px
 
+.center-text
+  text-align: center
+
+.article
+  margin-top: 1em
+
+.heading
+  background-color: $color-white
+  color: $color-shadow
+  margin-bottom: 0.5em
+
+h2
+  font-size: 1.5em
+  padding: 10px
+  -moz-box-shadow: 7px 7px $color-shadow
+  -webkit-box-shadow: 7px 7px $color-shadow
+  box-shadow: 7px 7px $color-shadow
+
+.shadow-left
+  -moz-box-shadow: -7px 7px $color-shadow
+  -webkit-box-shadow: -7px 7px $color-shadow
+  box-shadow: -7px 7px $color-shadow
+
+p
+  font-size: 0.8em
+  padding: 10px
+
+#logo
+  width: 100%
+  height: 9em
+  margin-top: 2em
+  margin-bottom: 2em
+  display: block
+  background-color: $color-black
+
 label
   text-shadow: $color-black 0.1em 0.1em 0.1em
   color: $color-white
@@ -38,21 +71,29 @@ label
   display: block
 
 button
-  padding: 20px
+  margin: 20px
+  padding: 10px
+  border-radius: 4px
   font-family: 'Press Start 2P', cursive
   font-size: 1.5em
   color: $color-white
-  background-color: $color-light
+  background-color: $color-gray
   border: 0px solid $color-black
-  display: block
-  margin-left: auto
-  margin-right: auto
+  display: inline-block
   text-align: center
   cursor: pointer
   text-shadow: $color-black 0.1em 0.1em 0.1em
+  -moz-box-shadow: 3px 3px $color-black
+  -webkit-box-shadow: 3px 3px $color-black
+  box-shadow: 3px 3px $color-black
 
 button:hover
   color: $color-accent
+  background-color: #454577
+
+button.inactive:hover
+  color: $color-white
+  background-color: $color-gray
 
 input, input:active
   border: 3px solid $color-white

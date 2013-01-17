@@ -3,7 +3,10 @@
   %head
     =haml :head_portal
   %body
-    #header
-    #content 
+    #header.row
+      .col4
+      .col4
+        %span#logo
+      .col4.last
+    #content.row
       =yield
-    #footer

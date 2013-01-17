@@ -2,7 +2,8 @@ require 'sass'
 require 'coffee-script'
 
 class SassCssConverter < Sinatra::Base
-    set :views, File.dirname(__FILE__) + "/../../assets/css"
+    sass_dir= File.dirname(__FILE__) + "/../../assets/css"
+    set :views, sass_dir
     get '/*.css' do
       content_type 'text/css', :charset => 'utf-8'
       filename = params[:splat].first
