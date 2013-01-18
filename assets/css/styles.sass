@@ -11,44 +11,11 @@ h1
   position: relative
 
 p
-  line-height: 1.5em
+  line-height: 1.25em
   font-size: 0.8em
   padding: 10px
+  text-align: left
   text-shadow: $color-gray 0.1em 0.1em 0.1em
-
-.shadow
-  padding-bottom: 10px
-
-.box
-  margin-left: auto
-  margin-right: auto
-  text-align: center
-  border: 5px solid $color-white
-  -moz-box-shadow: 7px 7px $color-shadow
-  -webkit-box-shadow: 7px 7px $color-shadow
-  box-shadow: 7px 7px $color-shadow
-
-.message
-  width: 600px
-
-.form
-  width: 400px
-
-.center-text
-  text-align: center
-
-.article
-  margin-top: 1em
-
-.heading
-  background-color: $color-white
-  color: $color-shadow
-  margin-bottom: 0.5em
-
-#signup
-  padding: 15px
-  font-size: 2em
-  background-color: #CC0000
 
 h2
   font-size: 1.5em
@@ -56,19 +23,6 @@ h2
   -moz-box-shadow: 7px 7px $color-shadow
   -webkit-box-shadow: 7px 7px $color-shadow
   box-shadow: 7px 7px $color-shadow
-
-.shadow-left
-  -moz-box-shadow: -7px 7px $color-shadow
-  -webkit-box-shadow: -7px 7px $color-shadow
-  box-shadow: -7px 7px $color-shadow
-
-#logo
-  width: 100%
-  height: 9em
-  margin-top: 2em
-  margin-bottom: 2em
-  display: block
-  background-color: $color-black
 
 label
   text-shadow: $color-black 0.1em 0.1em 0.1em
@@ -109,12 +63,98 @@ input, input:active
   border: 3px solid $color-white
   width: 250px
   height: 20px
-  color: $color-white
-  background-color: $color-light
+  color: $color-gray
+  background-color: $color-white
   font-size: 0.7em
   font-family: 'Press Start 2P', cursive
   outline: none
+  padding: 2px
+  border-radius: 4px
+  -moz-box-shadow: 3px 3px $color-black
+  -webkit-box-shadow: 3px 3px $color-black
+  box-shadow: 3px 3px $color-black
+  margin: 10px
 
 input:focus
   outline: none
   border-color: $color-accent
+
+.shadow
+  padding-bottom: 10px
+
+.box
+  margin-left: auto
+  margin-right: auto
+  margin-bottom: 20px
+  text-align: center
+  border: 5px solid $color-white
+  -moz-box-shadow: 7px 7px $color-shadow
+  -webkit-box-shadow: 7px 7px $color-shadow
+  box-shadow: 7px 7px $color-shadow
+  background-color: $color-light
+
+.box .heading h2
+  -moz-box-shadow: 0px 7px $color-shadow
+  -webkit-box-shadow: 0px 7px $color-shadow
+  box-shadow: 0px 7px $color-shadow
+
+.message
+  width: 600px
+
+.center-text
+  text-align: center
+
+.article
+  margin-top: 1em
+
+.heading
+  background-color: $color-white
+  color: $color-shadow
+  margin-bottom: 0.5em
+
+.shadow-left
+  -moz-box-shadow: -7px 7px $color-shadow
+  -webkit-box-shadow: -7px 7px $color-shadow
+  box-shadow: -7px 7px $color-shadow
+
+#logo
+  width: 100%
+  height: 9em
+  margin-top: 2em
+  margin-bottom: 2em
+  display: block
+  background-color: $color-black
+
+#signup
+  padding: 15px
+  line-height: 1.5em
+  font-size: 1.5em
+  background-color: #CC0000
+
+#delete
+  padding: 10px
+  background-color: #CC0000
+
+#login
+  display: inline-block
+  margin: 0
+  padding: 20px
+
+#loginspan
+  display: inline-block
+  width: 70%
+
+#loginspan input
+  width: 80%
+  display: inline-block
+
+#cover-all
+  background-color: rgba(30,30,30,0.5)
+  width: 100%
+  height: 100%
+  position: absolute
+  z-index: 9999
+  display: none
+
+.message
+  margin-top: 200px

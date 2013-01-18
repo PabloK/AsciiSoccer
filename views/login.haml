@@ -1,0 +1,10 @@
+.heading
+  %h2 Join/Logon
+%form#loginform{:method => "post"}
+  %label Email: 
+  %input{:name => "email"}
+  %label Password: 
+  %input{:type => "password", :name => "signature"}
+    %div
+      %button{:type => "button",:onclick => "submitForm('#loginform','/log/on');"} Logon
+      %button{:type => "button",:onclick => "submitForm('#loginform','/recover');"} Recover

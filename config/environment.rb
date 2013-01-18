@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'sinatra/base'
+require 'sinatra/flash'
 require 'data_mapper'
 
 class  Sinatra::Base
@@ -9,6 +10,7 @@ class  Sinatra::Base
   end
 
   set :views, File.dirname(__FILE__) + "/../views"
+  register Sinatra::Flash
   
 end
 

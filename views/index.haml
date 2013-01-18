@@ -13,17 +13,19 @@
     .article
       .heading
         %h2 Playing the game
-      %p AsciiSoccer is a soccer like game where you control one of the players. The goal of the game is to score as manny goals as possible before the game ends.
-      %p The game starts after an initial count down when all the players have connected. After ninety seconds the team with the moast goals is named the winner. If the score is equal the game counts as a draw.
-      %p To control your player you use the numpad, make sure numlock is on, or the arrow keys. You can shoot using the s key and dribble using the a and d keys. Let the fun begin!
+      .box
+        %p AsciiSoccer is a soccer like game where you control one of the players. The goal of the game is to score as manny goals as possible before the game ends.
+        %p The game starts after an initial count down when all the players have connected. After ninety seconds the team with the moast goals is named the winner. If the score is equal the game counts as a draw.
+        %p To control your player you use the numpad, make sure numlock is on, or the arrow keys. You can shoot using the s key and dribble using the a and d keys. Let the fun begin!
   .col4.last.center-text
-    %button#signup Signup
+    %button#signup{:onClick => "popup({url:'/loginform'})"} Join/Logon
 .row
   .col8
     .article
       .heading
         %h2 Playing with friends
-      %p To play with your friends simply signup for an account. This allows you to search for and add friends to your friends lits. It will also allow your games to be ranked. The highest ranked players can be seen to the right on the highscore list.
+      .box
+        %p To play with your friends simply signup for an account. This allows you to search for and add friends to your friends lits. It will also allow your games to be ranked. The highest ranked players can be seen to the right on the highscore list.
   .col4.last
     .article
       .heading

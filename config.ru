@@ -22,6 +22,18 @@ map '/' do
     run PortalController
   end
 
+  map '/log' do
+    run LogController
+  end
+
+  map '/recover' do
+    run RecoverController
+  end
+
+  map '/user' do
+    run UserController
+  end
+
   map '/game' do
     run GameController
   end

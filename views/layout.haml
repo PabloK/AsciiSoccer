@@ -3,6 +3,16 @@
   %head
     =haml :head_portal
   %body
+    #cover-all
+      .box.message
+        -if @message 
+          .heading
+            %h2 Message
+          %p=@message
+          %button{:onclick => "$('#cover-all').hide();"} OK
+        -if @delete
+          %button#delete{:onclick => "window.location='/user/delete'"} Delete
+          
     #header.row
       .col4
       .col4
