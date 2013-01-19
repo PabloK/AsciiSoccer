@@ -133,6 +133,8 @@ do_action = (str) ->
       current_game.update_game tempAction.data
     when "setup"
       current_game.setup(tempAction.data)
+    when "already_started"
+      alert("This game is already underway");
     else
       null
 
