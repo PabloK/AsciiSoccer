@@ -239,7 +239,9 @@ $(document).ready ->
         current_game.socket.send 8
       when 103
         current_game.socket.send 7
-      when 83
-        current_game.socket.send "s"
+      when 65
+        current_game.socket.send "a"
+      when 68
+        current_game.socket.send "d"
       else
         console.log "Undefined key: " + e.keyCode
