@@ -26,7 +26,6 @@ class User
   end
 
   def password=(new_password)
-    #TODO validate password length
     @password = Password.create(new_password)
     self.password_hash = @password
   end

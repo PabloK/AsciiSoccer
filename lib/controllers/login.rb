@@ -14,7 +14,7 @@ class LogController < Sinatra::Base
 
   post '/on' do
     user = User.first(:email => params[:email].downcase)
-    if user and user.password == params[:signature] 
+    if user and user.password == params[:password] 
       login(user)
       flash[:message] = "Login successfull."
       redirect '/' 
