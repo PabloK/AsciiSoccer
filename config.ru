@@ -26,12 +26,12 @@ map '/' do
     run LogController
   end
 
-  map '/recover' do
-    run RecoverController
+  map '/signup' do
+    run SignupCotroller
   end
 
-  map '/user' do
-    run UserController
+  map '/recover' do
+    run RecoverController
   end
 
   map '/game' do

@@ -31,7 +31,7 @@ label
   padding-top: 1em
   display: block
 
-button
+.button
   margin: 20px
   padding: 10px
   border-radius: 4px
@@ -48,14 +48,14 @@ button
   -webkit-box-shadow: 3px 3px $color-black
   box-shadow: 3px 3px $color-black
 
-button:hover
+.button:hover
   color: $color-accent
   background-color: #454577
 
-button.inactive
+.button.inactive
   color: #999
 
-button.inactive:hover
+.button.inactive:hover
   background-color: $color-gray
   color: #999
 
@@ -125,15 +125,30 @@ input:focus
   display: block
   background-color: $color-black
 
-#signup
-  padding: 15px
-  line-height: 1.5em
+.linebutton
+  font-family: 'Press Start 2P', cursive
+  font-weight: bold
   font-size: 1.5em
-  background-color: #CC0000
-
-#delete
+  margin-top: 15px
   padding: 10px
+  width: 100%
+  display: block
+  border: 0
+  -moz-box-shadow: -7px 7px $color-shadow
+  -webkit-box-shadow: -7px 7px $color-shadow
+  box-shadow: -7px 7px $color-shadow
+  background-color: $color-white
+  color: $color-shadow
+  cursor: pointer
+
+
+#loginbutton:hover
   background-color: #CC0000
+  color: $color-white
+
+#signup:hover
+  background-color: #CC0000
+  color: $color-white
 
 #login
   display: inline-block

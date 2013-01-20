@@ -13,22 +13,11 @@ class LogController < Sinatra::Base
   end
 
   post '/on' do
-    user = User.first(:email => params[:email])
+    user = User.first(:email => params[:email].downcase)
     if user and user.password == params[:signature] 
       login(user)
       flash[:message] = "Login successfull."
       redirect '/' 
-    elsif user == nil
-      new_user = User.new(:email => params[:email], :password => params[:signature])
-      if new_user.save
-        login(new_user)
-        flash[:message] = "New account #{new_user.email} was successfully created.
-                           if you accedently created this account please remove it!"
-        flash[:delete] = true
-        redirect '/'
-      end
-      flash[:message] = "The new account could not be created."
-      redirect '/'
     end
     
     flash[:message] = "Password or username was incorrect."
@@ -36,32 +25,16 @@ class LogController < Sinatra::Base
     
   end
 
-  post '/out' do
-
+  get '/out' do
+    session.delete(:user)
+    session.delete(:lookup)
+    redirect '/'
   end
 
 end
 
 class RecoverController < Sinatra::Base
-
   post '/' do
 
   end
-
-end
-class UserController < Sinatra::Base
-
-  post '/delete/:id' do
-    haml :delete
-  end
-
-  post '/delete' do
-    user.get(session[:user]).destroy!
-    session = nil
-  end
-
-  post '/change' do
-
-  end
-
 end

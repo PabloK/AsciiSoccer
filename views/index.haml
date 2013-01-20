@@ -5,8 +5,11 @@
       %div.center-text
         %h1 Play VS.
       %div.center-text
-        %button.inactive Friend
-        %button Random
+        -if session[:user]
+          %button.button Friend
+        -else 
+          %button.button.inactive Friend
+        %button.button Random
   .col3.last
 .row
   .col8
@@ -18,7 +21,14 @@
         %p The game starts after an initial count down when all the players have connected. After ninety seconds the team with the moast goals is named the winner. If the score is equal the game counts as a draw.
         %p To control your player you use the numpad, make sure numlock is on, or the arrow keys. You can shoot using the s key and dribble using the a and d keys. Let the fun begin!
   .col4.last.center-text
-    %button#signup{:onClick => "popup({url:'/loginform'})"} Join/Logon
+    -if session[:user]
+      %button.linebutton#loginbutton{:onClick => "window.location='/log/out'"} Log out
+      .article
+        .heading
+          %h2.shadow-left Friends
+    -else
+      %button.linebutton#signup{:onClick => "popup({url:'/signupform'})"} Sign up
+      %button.linebutton#loginbutton{:onClick => "popup({url:'/loginform'})"} Log in
 .row
   .col8
     .article

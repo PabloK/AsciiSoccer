@@ -9,9 +9,7 @@
           .heading
             %h2 Message
           %p=@message
-          %button{:onclick => "$('#cover-all').hide();"} OK
-        -if @delete
-          %button#delete{:onclick => "window.location='/user/delete'"} Delete
+          %button.button{:onclick => "$('#cover-all').hide();"} OK
           
     #header.row
       .col4
