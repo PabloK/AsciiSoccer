@@ -24,8 +24,8 @@ class SignupCotroller < Sinatra::Base
       flash[:message] = "New account #{new_user.email} was successfully created."
       redirect '/'
     end
-
-    flash[:message] = "The new account could not be created."
+    @error = new_user.errors
+    flash[:message] = haml :error, :layout => false
     redirect '/'
   end
 end
