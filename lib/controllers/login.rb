@@ -1,17 +1,5 @@
 class LogController < Sinatra::Base
 
-  def login(user)
-      if user.new_lookup
-        puts user.lookup
-        session[:user]=user.id
-        session[:lookup]=user.lookup
-        return
-      end
-      
-      flash[:message] = "The login could not be completed."
-      redirect '/'
-  end
-
   post '/on' do
     user = User.first(:email => params[:email].downcase)
     if user and user.password == params[:password] 

@@ -4,7 +4,7 @@ class Player
     color = 0  if typeof color is "undefined"
     @character = character
     @name = name
-    @color = country_colors[color]
+    @color = color
     @X = 0
     @Y = 0
 
@@ -65,7 +65,7 @@ class Game
     @team_2_score_display = $("#team2")
     @team_1_score = 0
     @team_2_score = 0
-    @ball = new Ball("Ball", "O")
+    @ball = new Ball("Ball", "O", config["white"])
     @players = []
     @team_1_country = undefined
     @team_1_country = undefined
@@ -80,9 +80,9 @@ class Game
     i = 1
     while i <= arr[0]
       if i % 2 is 0
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_1_country
+        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config["color1"]
       else
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_2_country
+        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config["color2"]
       i++
 
   # Create and add a new player to the game 
@@ -167,11 +167,11 @@ holdit = (btn, action, start, speedup) ->
 
 #Draw the court
 draw_court = ->
-  ctx.fillStyle = "#2DF700";
+  ctx.fillStyle = config["background"];
   ctx.fillRect(0, 0, 1000, 600);
-  ctx.fillStyle = "#FAFAFA";
+  ctx.fillStyle = config["white"];
   ctx.fillRect(20, 20, 960, 560);
-  ctx.fillStyle = "#2DD700";
+  ctx.fillStyle = config["foreground"];
   ctx.fillRect(22, 22, 956, 556);
   ctx.fillRect(0, 20 * 12, 1000, 20*6);
 
@@ -180,7 +180,8 @@ current_game = undefined
 canvas = undefined
 ctx = undefined
 socket = undefined
-country_colors = ["#FFFFFF", "#FF0000", "#FFFF00", "#FF00FF", "#00FFFF"]
+country_colors = []
+config = []
 
 
 #Initiate game and more
@@ -189,28 +190,16 @@ $(document).ready ->
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")
 
-
-  config = []
   config['host'] = "ws://54.228.243.154:8080/"
   for element in $("#gameConfig").children()
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
+  
+  country_colors = [config["color1"], config["color2"],config["color3"], config["color4"], config["color5"],config["color6"], config["color7"], config["color8"]]
 
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])
-
-  if $("#onscreenkeyboard").length != 0 
-    console.log("yes")
-    holdit($("#upleft"), (() -> current_game.socket.send(7)),  300,3)  
-    holdit($("#up"), (() -> current_game.socket.send(8)),      300,3)  
-    holdit($("#upright"),(() -> current_game.socket.send(9)),  300,3)  
-    holdit($("#left"),(() -> current_game.socket.send(4)),     300,3)  
-    holdit($("#right"),(() -> current_game.socket.send(6)) ,   300,3)  
-    holdit($("#downleft"),(() -> current_game.socket.send(1)), 300,3)  
-    holdit($("#down"),(() -> current_game.socket.send(2)),     300,3)  
-    holdit($("#downright"),(() -> current_game.socket.send(3)),300,3)  
-
 
   #Handling Input
   $(window).keydown (e) ->

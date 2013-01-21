@@ -1,0 +1,17 @@
+.heading
+  %h2="Settings"
+%form{:id => "settingsform",:method => "post"}
+  %label Name: 
+  %input{:name => "name"}
+  %label Team color: 
+  %input.colorpicker.color1{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color2{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color3{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color4{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color5{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color6{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color7{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color8{:type => "radio", :name => "color", :value => ""}  
+  %div
+    %button.button{:type => "button",:onClick => "submitForm('#settingsform','/settings');"} Save
+    %button.button{:type => "button",:onClick => "closeMessage();"} Cancel

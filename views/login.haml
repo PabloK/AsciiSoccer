@@ -5,7 +5,7 @@
   %input{:name => "email"}
   %label Password: 
   %input{:type => "password", :name => "password"}
-    %div
-      %button.button{:type => "button",:onclick => "submitForm('##{@type}form','#{@submit}');"}=@text
-      -if @login
-        %button.button{:type => "button",:onclick => "submitForm('##{@type}form','/recover');"} Recover
+  %div
+    %button.button{:type => "button",:onclick => "submitForm('##{@type}form','#{@submit}');"}=@text
+    -if @login
+      %button.button{:type => "button",:onclick => "submitForm('##{@type}form','/recover');"} Recover

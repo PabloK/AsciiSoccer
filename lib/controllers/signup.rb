@@ -1,21 +1,4 @@
 class SignupCotroller < Sinatra::Base
-
-  def login(user)
-      if user.new_lookup
-        puts user.lookup
-        session[:user]=user.id
-        session[:lookup]=user.lookup
-        return
-      end
-      
-      flash[:message] = "The login could not be completed."
-      redirect '/'
-  end
-
-  def valid_password(password)
-    return password.length >= 8
-  end
-
   post '/' do
     unless valid_password(params[:password])
       @error = [["Password needs to be atleast eight characters long."]]

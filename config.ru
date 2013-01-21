@@ -1,4 +1,5 @@
 require './config/environment'
+require './config/helpers'
 require './lib/controllers'
 
 map '/' do
@@ -28,6 +29,10 @@ map '/' do
 
   map '/signup' do
     run SignupCotroller
+  end
+
+  map '/settings' do
+    run SettingsCotroller
   end
 
   map '/recover' do

@@ -14,6 +14,11 @@ popup = (configure) ->
   if configure["text"] != undefined
     setMessage(configure["text"])
 
+closeMessage = ()->
+  console.log("closing");
+  $("#cover-all").hide()
+  return false
+
 submitForm = (formName, action) -> 
   form = $(formName)
   console.log(form)
@@ -22,10 +27,9 @@ submitForm = (formName, action) ->
   return false
 
 $(document).ready((->
-  cover = $("#cover-all")
   $(document).keydown((
     (e)->
       code = e.keyCode
       if code == 27
-        cover.hide()
+        closeMessage()
   ))))

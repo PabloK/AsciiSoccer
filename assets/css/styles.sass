@@ -1,13 +1,13 @@
 @import "color"
 
 body 
-  background-color: $color-light
-  color: $color-text
+  background-color: $light
+  color: $white
   font-family: 'Press Start 2P', cursive
 
 h1
   padding-top: 20px
-  text-shadow: $color-black 0.1em 0.1em 0.1em
+  text-shadow: $black 0.1em 0.1em 0.1em
   position: relative
 
 p
@@ -15,18 +15,18 @@ p
   font-size: 0.8em
   padding: 10px
   text-align: left
-  text-shadow: $color-gray 0.1em 0.1em 0.1em
+  text-shadow: $gray 0.1em 0.1em 0.1em
 
 h2
   font-size: 1.5em
   padding: 10px
-  -moz-box-shadow: 7px 7px $color-shadow
-  -webkit-box-shadow: 7px 7px $color-shadow
-  box-shadow: 7px 7px $color-shadow
+  -moz-box-shadow: 7px 7px $shadow
+  -webkit-box-shadow: 7px 7px $shadow
+  box-shadow: 7px 7px $shadow
 
 label
-  text-shadow: $color-black 0.1em 0.1em 0.1em
-  color: $color-white
+  text-shadow: $black 0.1em 0.1em 0.1em
+  color: $white
   padding: 0.5em
   padding-top: 1em
   display: block
@@ -37,47 +37,47 @@ label
   border-radius: 4px
   font-family: 'Press Start 2P', cursive
   font-size: 1.5em
-  color: $color-white
-  background-color: $color-gray
-  border: 0px solid $color-black
+  color: $white
+  background-color: $gray
+  border: 0px solid $black
   display: inline-block
   text-align: center
   cursor: pointer
-  text-shadow: $color-black 0.1em 0.1em 0.1em
-  -moz-box-shadow: 3px 3px $color-black
-  -webkit-box-shadow: 3px 3px $color-black
-  box-shadow: 3px 3px $color-black
+  text-shadow: $black 0.1em 0.1em 0.1em
+  -moz-box-shadow: 3px 3px $black
+  -webkit-box-shadow: 3px 3px $black
+  box-shadow: 3px 3px $black
 
 .button:hover
-  color: $color-accent
-  background-color: #454577
+  color: $accent
+  background-color: $active
 
 .button.inactive
-  color: #999
+  color: $inactive
 
 .button.inactive:hover
-  background-color: $color-gray
-  color: #999
+  background-color: $gray
+  color: $inactive
 
 input, input:active
-  border: 3px solid $color-white
+  border: 3px solid $white
   width: 250px
   height: 20px
-  color: $color-gray
-  background-color: $color-white
+  color: $gray
+  background-color: $white
   font-size: 0.7em
   font-family: 'Press Start 2P', cursive
   outline: none
   padding: 2px
   border-radius: 4px
-  -moz-box-shadow: 3px 3px $color-black
-  -webkit-box-shadow: 3px 3px $color-black
-  box-shadow: 3px 3px $color-black
+  -moz-box-shadow: 3px 3px $black
+  -webkit-box-shadow: 3px 3px $black
+  box-shadow: 3px 3px $black
   margin: 10px
 
 input:focus
   outline: none
-  border-color: $color-accent
+  border-color: $accent
 
 .shadow
   padding-bottom: 10px
@@ -87,16 +87,16 @@ input:focus
   margin-right: auto
   margin-bottom: 20px
   text-align: center
-  border: 5px solid $color-white
-  -moz-box-shadow: 7px 7px $color-shadow
-  -webkit-box-shadow: 7px 7px $color-shadow
-  box-shadow: 7px 7px $color-shadow
-  background-color: $color-light
+  border: 5px solid $white
+  -moz-box-shadow: 7px 7px $shadow
+  -webkit-box-shadow: 7px 7px $shadow
+  box-shadow: 7px 7px $shadow
+  background-color: $light
 
 .box .heading h2
-  -moz-box-shadow: 0px 7px $color-shadow
-  -webkit-box-shadow: 0px 7px $color-shadow
-  box-shadow: 0px 7px $color-shadow
+  -moz-box-shadow: 0px 7px $shadow
+  -webkit-box-shadow: 0px 7px $shadow
+  box-shadow: 0px 7px $shadow
 
 .message
   width: 600px
@@ -108,14 +108,14 @@ input:focus
   margin-top: 1em
 
 .heading
-  background-color: $color-white
-  color: $color-shadow
+  background-color: $white
+  color: $shadow
   margin-bottom: 0.5em
 
 .shadow-left
-  -moz-box-shadow: -7px 7px $color-shadow
-  -webkit-box-shadow: -7px 7px $color-shadow
-  box-shadow: -7px 7px $color-shadow
+  -moz-box-shadow: -7px 7px $shadow
+  -webkit-box-shadow: -7px 7px $shadow
+  box-shadow: -7px 7px $shadow
 
 #logo
   width: 100%
@@ -123,7 +123,7 @@ input:focus
   margin-top: 2em
   margin-bottom: 2em
   display: block
-  background-color: $color-black
+  background-color: $black
 
 .linebutton
   font-family: 'Press Start 2P', cursive
@@ -134,21 +134,21 @@ input:focus
   width: 100%
   display: block
   border: 0
-  -moz-box-shadow: -7px 7px $color-shadow
-  -webkit-box-shadow: -7px 7px $color-shadow
-  box-shadow: -7px 7px $color-shadow
-  background-color: $color-white
-  color: $color-shadow
+  -moz-box-shadow: -7px 7px $shadow
+  -webkit-box-shadow: -7px 7px $shadow
+  box-shadow: -7px 7px $shadow
+  background-color: $white
+  color: $shadow
   cursor: pointer
 
 
 #loginbutton:hover
-  background-color: #CC0000
-  color: $color-white
+  background-color: $accent2
+  color: $white
 
 #signup:hover
-  background-color: #CC0000
-  color: $color-white
+  background-color: $accent2
+  color: $white
 
 #login
   display: inline-block
@@ -179,11 +179,52 @@ input:focus
   margin-left: auto
   margin-right: auto
   width: 90%
-  background-color: #CC0000
-  -moz-box-shadow: -7px 7px $color-shadow
-  -webkit-box-shadow: -7px 7px $color-shadow
-  box-shadow: -7px 7px $color-shadow
-  text-shadow: $color-black 0.1em 0.1em 0.1em
+  background-color: $accent2
+  -moz-box-shadow: -7px 7px $shadow
+  -webkit-box-shadow: -7px 7px $shadow
+  box-shadow: -7px 7px $shadow
+  text-shadow: $black 0.1em 0.1em 0.1em
 
 .message
   margin-top: 200px
+
+.colorpicker:active
+  -webkit-appearance: none
+  border: 5px solid $shadow
+  width: 25px
+  height: 25px
+.colorpicker
+  -webkit-appearance: none
+  border: 5px solid $shadow
+  width: 25px
+  height: 25px
+
+.colorpicker:checked
+  -webkit-appearance: none
+  border: 5px solid $white
+  width: 25px
+  height: 25px
+
+.color1
+  background-color: $color1
+
+.color2
+  background-color: $color2
+
+.color3
+  background-color: $color2
+
+.color4
+  background-color: $color4
+
+.color5
+  background-color: $color5
+
+.color6
+  background-color: $color6
+
+.color7
+  background-color: $color7
+
+.color8
+  background-color: $color8

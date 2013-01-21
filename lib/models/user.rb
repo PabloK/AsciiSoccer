@@ -16,9 +16,19 @@ class User
   validates_length_of :name , :within => 0..20, :message => "A team name must have be between 3 and 20 characters long."
   validates_format_of :color , :with => /^#[0-9ABCDEFabcdef]{6}$/ , :message => "Colors must be in hexadecimal format." , :if => lambda {|u| u.color != nil }
 
+  def name
+    if @name == '' or @name == nil
+      return "User#{@id}"
+    end
+    return @name
+  end
+
+  def valid?(session_lookup)
+    return session_lookup == @lookup
+  end
   
   def new_lookup
-    (0...50).map{ ('a'..'z').to_a[rand(26)]}.join
+    update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join)
   end
 
   def password
@@ -27,11 +37,7 @@ class User
 
   def password=(new_password)
     @password = Password.create(new_password)
-    self.password_hash = @password
-  end
-
-  def is_valid_session key
-    return self.lookup.session_key == key
+    @password_hash = @password
   end
 
   def email= email
@@ -39,7 +45,7 @@ class User
   end
 
   def name= new_name
-    super new_name.downcase
+    super new_name
   end
 
 end
