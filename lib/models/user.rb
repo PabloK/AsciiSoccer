@@ -9,6 +9,7 @@ class User
   property :email,    String, :required => true, :unique => true
   property :password_hash, String, :required => true, :lazy => true
   property :lookup, String, :lazy => false
+  property :recover_key, String, :lazy => false
   property :color,    String, :length => 7, :default => "#903c3b"
   
   validates_format_of :email , :as => /^.*@.*\..*{3,}$/i, :message => "Email adress format must be valid."
@@ -27,6 +28,10 @@ class User
     return session_lookup == @lookup
   end
   
+  def generate_recover_key
+    update!(:recovery_key => (0...64).map{ ('a'..'z').to_a[rand(26)]}.join)
+  end
+
   def new_lookup
     update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join)
   end

@@ -2,16 +2,24 @@
   %h2="Settings"
 %form{:id => "settingsform",:method => "post"}
   %label Name: 
-  %input{:name => "name"}
+  %input{:name => "name", :value => @user.name || ""}
   %label Team color: 
-  %input.colorpicker.color1{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color2{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color3{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color4{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color5{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color6{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color7{:type => "radio", :name => "color", :value => ""}  
-  %input.colorpicker.color8{:type => "radio", :name => "color", :value => ""}  
+  %input.colorpicker.color1{:type => "radio", :name => "color", :value => $config[:color1], 
+  :checked => @user.color == $config[:color1] ? "checked" : nil}  
+  %input.colorpicker.color2{:type => "radio", :name => "color", :value => $config[:color2], 
+  :checked => @user.color == $config[:color2] ? "checked" : nil}  
+  %input.colorpicker.color3{:type => "radio", :name => "color", :value => $config[:color3], 
+  :checked => @user.color == $config[:color3] ? "checked" : nil}  
+  %input.colorpicker.color4{:type => "radio", :name => "color", :value => $config[:color4], 
+  :checked => @user.color == $config[:color4] ? "checked" : nil}  
+  %input.colorpicker.color5{:type => "radio", :name => "color", :value => $config[:color5], 
+  :checked => @user.color == $config[:color5] ? "checked" : nil}  
+  %input.colorpicker.color6{:type => "radio", :name => "color", :value => $config[:color6], 
+  :checked => @user.color == $config[:color6] ? "checked" : nil}  
+  %input.colorpicker.color7{:type => "radio", :name => "color", :value => $config[:color7], 
+  :checked => @user.color == $config[:color7] ? "checked" : nil}  
+  %input.colorpicker.color8{:type => "radio", :name => "color", :value => $config[:color8], 
+  :checked => @user.color == $config[:color8] ? "checked" : nil}  
   %div
     %button.button{:type => "button",:onClick => "submitForm('#settingsform','/settings');"} Save
     %button.button{:type => "button",:onClick => "closeMessage();"} Cancel

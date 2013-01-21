@@ -3,8 +3,6 @@ class SettingsCotroller < Sinatra::Base
   before do
     if session[:user]
       @user = User.get(session[:user])
-      puts @user.lookup
-      puts session[:lookup]
       if @user == nil or not @user.valid?(session[:lookup])
         session.delete(:user)
         session.delete(:lookup)
@@ -18,9 +16,7 @@ class SettingsCotroller < Sinatra::Base
   end
 
   post '/' do
-    @user.name = params[:name] 
-    @user.color = params[:color] 
-    if @user.save
+    if @user.update!(:name => params[:name], :color => params[:color])
       flash[:message] = "Your settings were successfully saved."
       redirect '/'
     end
