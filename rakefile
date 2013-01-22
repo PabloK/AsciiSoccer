@@ -4,5 +4,5 @@ require 'dm-migrations'
 
 desc "Recreate database from DataMapper model"
 task :migrate do
-  DataMapper.auto_migrate!   
+  DataMapper.finalize.auto_migrate!   
 end
