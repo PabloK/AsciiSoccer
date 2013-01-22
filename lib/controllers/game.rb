@@ -17,7 +17,7 @@ class GameController < Sinatra::Base
     if game and game.code == session[:code]
       if game.join!
         @port = params[:port]
-        haml :game, :layout => false
+        return haml :game, :layout => false
       end
       popup("Unable to join game on port #{game.port}. Check firewall.")
     end

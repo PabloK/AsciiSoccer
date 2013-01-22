@@ -4,8 +4,6 @@ class GameQueueController < Sinatra::Base
     game = Game.get_available_game
     game = Game.generate_game! if game == nil
 
-    puts game
-
     if game
       session[:code] = game.code
       redirect "/game/#{game.port}" 
