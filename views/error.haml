@@ -1,3 +1,6 @@
+.heading
+  %h2 Errors
 -@error.each do |e|
   -e.each do |text|
     .error=text
+%button.button{:onclick => "$('#cover-all').hide();"} Close

@@ -3,14 +3,13 @@ require 'bcrypt'
 class User
   include DataMapper::Resource  
   include BCrypt
-
-  property :id,       Serial
-  property :name,     String
-  property :email,    String, :required => true, :unique => true
-  property :password_hash, String, :required => true, :lazy => true
-  property :lookup, String, :lazy => false
-  property :recover_key, String, :lazy => false
-  property :color,    String, :length => 7, :default => "#903c3b"
+  property :id,             Serial
+  property :name,           String
+  property :email,          String, :required => true, :unique => true
+  property :password_hash,  String, :required => true, :lazy => true
+  property :lookup,         String, :lazy => false
+  property :recover_key,    String, :lazy => false
+  property :color,          String, :length => 7, :default => "#903c3b"
   
   validates_format_of :email , :as => /^.*@.*\..*{3,}$/i, :message => "Email adress format must be valid."
   validates_length_of :email , :within => 5..250, :message => "Email needs to be between 5 and 250 characters."
@@ -24,7 +23,7 @@ class User
     return @name
   end
 
-  def valid?(session_lookup)
+  def lookup_valid?(session_lookup)
     return session_lookup == @lookup
   end
   
@@ -47,10 +46,6 @@ class User
 
   def email= email
     super email.downcase
-  end
-
-  def name= new_name
-    super new_name
   end
 
 end

@@ -9,7 +9,7 @@
           %button.button Friend
         -else 
           %button.button.inactive Friend
-        %button.button Random
+        %button.button{:onclick => "window.location='/game_queue/'"} Random
   .col3.last
 -if session[:user]
   .row

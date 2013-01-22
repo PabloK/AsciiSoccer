@@ -39,6 +39,10 @@ map '/' do
     run RecoverController
   end
 
+  map '/game_queue' do
+    run GameQueueController
+  end
+
   map '/game' do
     run GameController
   end
