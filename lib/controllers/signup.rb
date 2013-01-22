@@ -11,8 +11,9 @@ class SignupCotroller < Sinatra::Base
       flash[:message] = "Username already registered"
       redirect '/'
     end 
-    new_user = User.new(:email => params[:email], :password => params[:password])
-    if new_user.save
+    new_user = User.new(:email => params[:email])
+    new_user.password = params[:password]
+    if new_user.save!
       login(new_user)
       flash[:message] = "New account #{new_user.email} was successfully created."
       redirect '/'

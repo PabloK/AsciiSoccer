@@ -32,6 +32,7 @@ class RecoverController < Sinatra::Base
           :subject => 'AsciiSoccer - Password Reset',
           :body => 'Plain',
           :html_body => (haml :recover),
+          :via => ENV['RACK_ENV'] == "development" ? :file : :smtp 
         }
         Pony.mail(options)
 
@@ -47,7 +48,11 @@ class RecoverController < Sinatra::Base
     redirect '/'
   end
 
-  get '/:recover_key' do
+  get '/:id/:recover_key' do
+     haml :reset    
+  end
 
+  post '/:id/:recover_key' do
+         
   end
 end

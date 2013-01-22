@@ -28,11 +28,11 @@ class User
     return session_lookup == @lookup
   end
   
-  def generate_recover_key
-    update!(:recovery_key => (0...64).map{ ('a'..'z').to_a[rand(26)]}.join)
+  def generate_recover_key!
+    update!(:recover_key => (0...64).map{ ('a'..'z').to_a[rand(26)]}.join)
   end
 
-  def new_lookup
+  def new_lookup!
     update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join)
   end
 
@@ -42,7 +42,7 @@ class User
 
   def password=(new_password)
     @password = Password.create(new_password)
-    @password_hash = @password
+    self.password_hash = @password
   end
 
   def email= email

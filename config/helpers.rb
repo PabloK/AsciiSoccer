@@ -1,6 +1,6 @@
 class  Sinatra::Base
   def login(user)
-      if user.new_lookup
+      if user.new_lookup!
         session[:user]=user.id
         session[:lookup]=user.lookup
         return
