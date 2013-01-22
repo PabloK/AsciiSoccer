@@ -14,4 +14,10 @@ class  Sinatra::Base
   def valid_password(password)
     return password.length >= 8
   end
+
+  def popup(message)
+    @message = message
+    flash[:message] = haml :message, :layout => false
+    redirect '/'
+  end
 end

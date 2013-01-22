@@ -9,3 +9,4 @@
     %button.button{:type => "button",:onclick => "submitForm('##{@type}form','#{@submit}');"}=@text
     -if @login
       %button.button{:type => "button",:onclick => "submitForm('##{@type}form','/recover');"} Recover
+    %button.button{:onclick => "$('#cover-all').hide(); return false;"} Close

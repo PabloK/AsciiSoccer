@@ -6,11 +6,7 @@
     #cover-all
       .box.message
         -if @message 
-          .heading
-            %h2 Message
-          %p=@message
-          %button.button{:onclick => "$('#cover-all').hide();"} OK
-          
+          =@message 
     #header.row
       .col4
       .col4

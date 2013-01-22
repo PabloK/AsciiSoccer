@@ -4,13 +4,10 @@ class LogController < Sinatra::Base
     user = User.first(:email => params[:email].downcase)
     if user and user.password == params[:password] 
       login(user)
-      flash[:message] = "Login successfull."
-      redirect '/' 
+      popup("Login successfull.")
     end
     
-    flash[:message] = "Password or username was incorrect."
-    redirect '/'
-    
+    popup("Password or username was incorrect.")
   end
 
   get '/out' do
@@ -36,23 +33,28 @@ class RecoverController < Sinatra::Base
         }
         Pony.mail(options)
 
-        flash[:message] = "A recovery email was sent to \"#{@user.email}\"."
-        redirect '/'
+        popup("A recovery email was sent to \"#{@user.email}\".")
       end
-
-      flash[:message] = "No recovery key could be generated for user \"#{@user.email}\"."
-      redirect '/'
+      popup("No recovery key could be generated for user \"#{@user.email}\".")
     end
-    
-    flash[:message] = "Your email \"#{params[:email]}\" could not be found in our systems."
-    redirect '/'
+    popup("Your email \"#{params[:email]}\" could not be found in our systems.")
   end
 
   get '/:id/:recover_key' do
-     haml :reset    
+     flash[:message] = haml :reset, :layout => false
+     redirect '/'   
   end
 
   post '/:id/:recover_key' do
-         
+    user = User.get(params[:id]) 
+    if user.recover_key == params[:recover_key] and not user.recover_key.nil? and not user.recover_key.empty?
+      user.password = params[:password]
+      user.recover_key = ""
+      if user.save!
+        login(user)
+        popup("Your password was successfully reset.")
+      end
+    end
+    popup("Your password could not be reset try again from the start.")
   end
 end

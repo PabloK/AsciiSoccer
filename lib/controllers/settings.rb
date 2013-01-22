@@ -17,8 +17,7 @@ class SettingsCotroller < Sinatra::Base
 
   post '/' do
     if @user.update!(:name => params[:name], :color => params[:color])
-      flash[:message] = "Your settings were successfully saved."
-      redirect '/'
+      popup("Your settings were successfully saved.")
     end
     @error = @user.errors
     flash[:message] = haml :error, :layout => false

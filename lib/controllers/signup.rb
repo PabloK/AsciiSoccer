@@ -8,15 +8,13 @@ class SignupCotroller < Sinatra::Base
       
     user = User.first(:email => params[:email].downcase)
     if user
-      flash[:message] = "Username already registered"
-      redirect '/'
+      popup("Username already registered")
     end 
     new_user = User.new(:email => params[:email])
     new_user.password = params[:password]
     if new_user.save!
       login(new_user)
-      flash[:message] = "New account #{new_user.email} was successfully created."
-      redirect '/'
+      popup("New account #{new_user.email} was successfully created.")
     end
     @error = new_user.errors
     flash[:message] = haml :error, :layout => false

@@ -1,0 +1,8 @@
+.heading
+  %h2 Recover
+%form{:id => "recoverform",:method => "post"}
+  %label New password: 
+  %input{:type => "password", :name => "password"}
+  %div
+    %button.button{:type => "button",:onclick => "submitForm('#recoverform','/recover/#{params[:id]}/#{params[:recover_key]}');"} Recover
+  %button.button{:onclick => "$('#cover-all').hide();"} Cancel
