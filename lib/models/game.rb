@@ -25,7 +25,7 @@ class Game
   end
 
   def self.remove_old_games
-    old_games = Game.all(:conditions => ['number_of_players = maximum_players AND created_date < ?', (Time.now - 120)]) 
+    old_games = Game.all(:conditions => ['number_of_players >= maximum_players AND created_date < ?', (Time.now - 120)]) 
     old_games.destroy if old_games
   end
   
@@ -47,6 +47,7 @@ class Game
   end
 
   def join!
+    return false if self.number_of_players >= self.maximum_players
     new_number = self.number_of_players + 1
     return self.update(:number_of_players => new_number, :created_date => Time.now )
   end
