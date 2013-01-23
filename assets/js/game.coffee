@@ -41,7 +41,8 @@ class Connect
           current_game.collected_msg = ""
 
       socket.onclose = ->
-        #TODO game end procedures?
+        if not current_game.game_ended_nicely
+          alert("The connection to the server has been broken.")
       
       return socket
     catch exception
@@ -135,6 +136,8 @@ do_action = (str) ->
       current_game.setup(tempAction.data)
     when "already_started"
       alert("This game is already underway");
+    when "end"
+      alert("Game has ended");
     else
       null
 

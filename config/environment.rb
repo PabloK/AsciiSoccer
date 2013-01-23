@@ -12,11 +12,11 @@ class  Sinatra::Base
   end
 
   if ENV['RACK_ENV'] == 'development'
-    $config[:host] = "ws://pablo-N53SN:8080/"
+    $config[:host] = "ws://#{%x{hostname}.delete("\n")}:8080/"
   end
 
-  $config[:first_port] = 4001
-  $config[:last_port] = 4099
+  $config[:first_port] = 4000
+  $config[:last_port] = 4100
 
   colorfile = File.new(File.dirname(__FILE__) + "/../assets/css/color.sass","r")
   while line = colorfile.gets 
