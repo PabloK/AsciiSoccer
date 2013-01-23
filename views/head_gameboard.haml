@@ -3,7 +3,8 @@
 %link{:rel => 'stylesheet', :type => 'text/css', :href => '/css/gameboard.css'}
 %link{:href => "http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic", :rel => "stylesheet", :type => "text/css"}
 #gameConfig
-  #port=@port
+  #current_player=@game.number_of_players
+  #port=@game.port
   -if @user and @user.color
     #selected_color=@user.color
   -$config.each do |key,value|
