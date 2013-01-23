@@ -75,9 +75,9 @@ class Game
   setup: (arr) ->
     @ball.setPosition 50, 15
 
-    for(i = 1; i <= arr[0]; i++)
+    for i in [1..arr[0]] by 1
       if i % 2 is 0
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config[config["selected_color"]]
+        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config["selected_color"]
       else
         @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config["color2"]
 
