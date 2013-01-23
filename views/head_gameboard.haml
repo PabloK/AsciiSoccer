@@ -4,5 +4,7 @@
 %link{:href => "http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic", :rel => "stylesheet", :type => "text/css"}
 #gameConfig
   #port=@port
+  -if @user.color
+    #selected_color=@user.color
   -$config.each do |key,value|
     %div{:id => key}=value

@@ -1,5 +1,5 @@
 #player object
-class Player 
+class Player
   constructor: (name, character, color) ->
     color = 0  if typeof color is "undefined"
     @character = character
@@ -25,11 +25,11 @@ class Ball extends Player
     ctx.fillRect 10 * (@X - 1), 20 * (@Y - 1)+5, 10, 10
 
 # Connect to the game server
-class Connect 
+class Connect
   constructor: (server,port) ->
     try
       unless /^40[0-9]{2}$/g.test(port)
-        throw "Port outside server port range" 
+        throw "Port outside server port range"
       host = server+ port
       socket = new WebSocket(host)
       socket.onopen = ->
@@ -41,7 +41,7 @@ class Connect
           current_game.collected_msg = ""
 
       socket.onclose = ->
-        if not current_game.game_ended_nicely
+        if not current_game.ended
           alert("The connection to the server has been broken.")
       
       return socket
@@ -59,6 +59,7 @@ parse_action = (str) ->
 #The game variables
 class Game
   constructor: () ->
+    @ended = false
     @collected_msg = ""
     @time = 0
     @time_display = $("#time")
@@ -68,23 +69,17 @@ class Game
     @team_2_score = 0
     @ball = new Ball("Ball", "O", config["white"])
     @players = []
-    @team_1_country = undefined
-    @team_1_country = undefined
     @socket = undefined
 
   # Initiate the game action
   setup: (arr) ->
-    @team_1_country = arr[1]
-    @team_2_country = arr[2]
     @ball.setPosition 50, 15
 
-    i = 1
-    while i <= arr[0]
+    for(i = 1; i <= arr[0]; i++)
       if i % 2 is 0
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config["color1"]
+        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config[config["selected_color"]]
       else
         @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], config["color2"]
-      i++
 
   # Create and add a new player to the game 
   set_player: (name, character, color) ->
@@ -94,7 +89,6 @@ class Game
   # Update game action
   update_game: (arr) ->
     @ball.setPosition arr[0], arr[1]
-    # TODO an error exists within scorecounting might be a message fault
     @team_1_score = arr[arr.length-3]
     @team_2_score = arr[arr.length-2]
     @time = arr[arr.length-4]
@@ -118,65 +112,38 @@ class Game
       @players[i].draw()
       i++
 
-  init_socket: (server,port) -> 
+  init_socket: (server,port) ->
     @socket = new Connect(server,port)
-
 
 #Execute actions from the server as they arrive
 do_action = (str) ->
   tempAction = new parse_action(str)
   switch tempAction.type
     when "chose"
+      #TODO alter this and the server to recive the user id and the lookup
       current_game.socket.send Math.floor(Math.random()*4+1)  if tempAction.data[0] is "1"
-      current_game.socket.send("Pablo")
+      current_game.socket.send("Irrelevant")
       current_game.socket.send("P")
     when "update"
       current_game.update_game tempAction.data
     when "setup"
       current_game.setup(tempAction.data)
     when "already_started"
-      alert("This game is already underway");
+      alert("This game is already underway")
     when "end"
-      alert("Game has ended");
+      current_game.ended = true
     else
       null
 
-#Helper function to give smooth key press
-holdit = (btn, action, start, speedup) ->
-  t = undefined
-  time = start
-  repeat = ->
-    action()
-    t = setTimeout(repeat, time + 50)
-    time = time / speedup
-
-  btn.mousedown(() ->
-    repeat()
-  )
-
-  btn.mouseup(() ->
-    clearTimeout t
-    time = start
-  )
-
-  btn.mouseout(() ->
-    clearTimeout t
-    time = start
-  )
-  btn.mouseleave(() ->
-    clearTimeout t
-    time = start
-  )
-
 #Draw the court
 draw_court = ->
-  ctx.fillStyle = config["background"];
-  ctx.fillRect(0, 0, 1000, 600);
-  ctx.fillStyle = config["white"];
-  ctx.fillRect(20, 20, 960, 560);
-  ctx.fillStyle = config["foreground"];
-  ctx.fillRect(22, 22, 956, 556);
-  ctx.fillRect(0, 20 * 12, 1000, 20*6);
+  ctx.fillStyle = config["background"]
+  ctx.fillRect(0, 0, 1000, 600)
+  ctx.fillStyle = config["white"]
+  ctx.fillRect(20, 20, 960, 560)
+  ctx.fillStyle = config["foreground"]
+  ctx.fillRect(22, 22, 956, 556)
+  ctx.fillRect(0, 20 * 12, 1000, 20*6)
 
 #The game variables
 current_game = undefined
