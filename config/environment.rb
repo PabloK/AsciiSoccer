@@ -7,8 +7,9 @@ require 'pony'
 class  Sinatra::Base
   $config = {}
   if ENV['RACK_ENV'] == 'production'
-      set :haml, { :ugly => true }
-      set :clean_trace, true
+    set :haml, { :ugly => true }
+    set :clean_trace, true
+    $config[:host] = "ws://109.74.8.60:8080/"
   end
 
   if ENV['RACK_ENV'] == 'development'

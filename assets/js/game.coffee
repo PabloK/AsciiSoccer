@@ -169,7 +169,6 @@ $(document).ready ->
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")
 
-  config['host'] = "ws://54.228.243.154:8080/"
   for element in $("#gameConfig").children()
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
