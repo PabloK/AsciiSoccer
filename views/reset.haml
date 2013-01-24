@@ -5,4 +5,4 @@
   %input{:type => "password", :name => "password"}
   %div
     %button.button{:type => "button",:onclick => "submitForm('#recoverform','/recover/#{params[:id]}/#{params[:recover_key]}');"} Recover
-  %button.button{:onclick => "$('#cover-all').hide();"} Cancel
+  %button.button{:onclick => "$('#cover-all').hide();return false;"} Cancel
