@@ -124,6 +124,12 @@ class Game
   init_socket: (server,port) ->
     @socket = new Connect(server,port)
 
+  # Play start sound
+  whistle: () ->
+    $("embed").remove()
+    $("body").append('<embed src="whistle.mp3" autostart="true" hidden="true" loop="false">')
+    return
+
 #Execute actions from the server as they arrive
 do_action = (str) ->
   tempAction = new parse_action(str)
@@ -154,17 +160,27 @@ draw_court = ->
   ctx.fillRect(22, 22, 956, 556)
   ctx.fillRect(0, 20 * 12, 1000, 20*6)
 
+# Preload the sound
+preload_sound = ->
+  $.ajax({
+    url: "public/audio/whistle.mp3",
+    error: () ->
+      alert("An error occured while loading the sound.")
+      return
+  })
+  return
+
 #The game variables
 current_game = undefined
 canvas = undefined
 ctx = undefined
 socket = undefined
-country_colors = []
 config = []
 
 
 #Initiate game and more
 $(document).ready ->
+  preload_sound()
   
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")
@@ -173,8 +189,6 @@ $(document).ready ->
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
   
-  country_colors = [config["color1"], config["color2"],config["color3"], config["color4"], config["color5"],config["color6"], config["color7"], config["color8"]]
-
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])
