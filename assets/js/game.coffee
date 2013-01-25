@@ -126,9 +126,7 @@ class Game
 
   # Play start sound
   whistle: () ->
-    $("embed").remove()
-    $("body").append('<embed src="whistle.mp3" autostart="true" hidden="true" loop="false">')
-    return
+    $("#whistle")[0].play()
 
 #Execute actions from the server as they arrive
 do_action = (str) ->
@@ -143,6 +141,11 @@ do_action = (str) ->
       current_game.update_game tempAction.data
     when "setup"
       current_game.setup(tempAction.data)
+      current_game.whistle()
+      console.log("sound!")
+    when "countdown"
+      #TODO countdown action with sound
+      null
     when "already_started"
       alert("This game is already underway")
     when "end"
@@ -163,7 +166,7 @@ draw_court = ->
 # Preload the sound
 preload_sound = ->
   $.ajax({
-    url: "public/audio/whistle.mp3",
+    url: "/audio/whistle.mp3",
     error: () ->
       alert("An error occured while loading the sound.")
       return

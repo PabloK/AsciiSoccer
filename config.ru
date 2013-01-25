@@ -6,7 +6,8 @@ map '/' do
 
   use Rack::Static, {
     :root => "public",
-    :urls => ["/images", "/favicon.ico", "/robots.txt"],
+    :urls => ["/audio"],
+    :content_type => "audio/mpeg",
     :cache_control => "public,max-age=#{365 * 24 * 3600}"
   }
   use Rack::Session::Cookie, :secret => ENV['SESSION_SECRETE'], :expire_after => 30 * 3600
