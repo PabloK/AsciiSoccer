@@ -3,6 +3,18 @@
   %head
     =haml :head_gameboard
   %body
+    #cover-all
+      .box.message
+        .heading
+          %h2 Game Over
+        .score-board
+          %span.accent-text Team 1
+          %span#team1finalscore 0
+          %span -
+          %span#team2finalscore 0
+          %span.accent-text Team 2
+        %button.button{:onclick => "window.location='/game_queue/'"} Play again
+        %button.button{:onclick => "window.location='/'"} Back
     #timebox
       %center
         %span#time 90

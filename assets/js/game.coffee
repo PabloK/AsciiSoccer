@@ -61,6 +61,7 @@ class Game
   constructor: () ->
     @ended = false
     @collected_msg = ""
+    @message = $("#cover-all")
     @time = 0
     @time_display = $("#time")
     @team_1_score_display = $("#team1")
@@ -130,6 +131,12 @@ class Game
   # Play start sound
   whistle: () ->
     $("#whistle")[0].play()
+  
+  show_endscreen: () ->
+    #TODO and sound depending on outcome
+    $("#team1finalscore").text(@team_1_score)
+    $("#team2finalscore").text(@team_2_score)
+    @message.show()
 
 #Execute actions from the server as they arrive
 do_action = (str) ->
@@ -145,16 +152,16 @@ do_action = (str) ->
     when "setup"
       current_game.setup(tempAction.data)
       current_game.whistle()
-      console.log("sound!")
     when "countdown"
       #TODO countdown action with sound
       null
     when "already_started"
       alert("This game is already underway")
     when "end"
-      current_game.ended = true
+      if not current_game.ended
+        current_game.ended = true
+        current_game.show_endscreen()
     else
-      null
 
 #Draw the court
 draw_court = ->
