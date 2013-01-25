@@ -67,6 +67,8 @@ class Game
     @team_2_score_display = $("#team2")
     @team_1_score = 0
     @team_2_score = 0
+    @team_1_color=config["color1"]
+    @team_2_color=config["color2"]
     @ball = new Ball("Ball", "O", config["white"])
     @players = []
     @socket = undefined
@@ -76,19 +78,20 @@ class Game
     @ball.setPosition 50, 15
 
     # Set correct color for each team
-    if config["current_player"] == 1
-      team_1_color = config["selected_color"]
-      team_1_color = config["color1"]
-    else
-      team_1_color = config["color1"]
-      team_1_color = config["selected_color"]
+    if config["selected_color"]
+      if config["current_player"] == "1"  
+        @team_1_color = config["selected_color"]
+        @team_2_color = config["color1"]
+      else
+        @team_1_color = config["color1"]
+        @team_2_color = config["selected_color"]
     
     # Create players for each team
     for i in [1..arr[0]] by 1
       if i % 2 is 0
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_1_color
-      else
         @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_2_color
+      else
+        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_1_color
 
   # Create and add a new player to the game 
   set_player: (name, character, color) ->
