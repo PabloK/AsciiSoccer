@@ -8,7 +8,15 @@
 #gameConfig
   #current_player=@game.number_of_players
   #port=@game.port
-  -if @user and @user.color
+  -if @user  
+    #signed_on 1
+    #lookup=@user.lookup
+    #user_id=@user.id
+    #team_name=@user.name
     #selected_color=@user.color
+  -else
+    #signed_on 0
+    #team_name="Team #{@game.number_of_players}"
+    #selected_color=1
   -$config.each do |key,value|
     %div{:id => key}=value

@@ -78,15 +78,10 @@ class Game
   setup: (arr) ->
     @ball.setPosition 50, 15
 
+    console.log(arr)
     # Set correct color for each team
-    if config["selected_color"]
-      if config["current_player"] == "1"  
-        @team_1_color = config["selected_color"]
-        @team_2_color = config["color1"]
-      else
-        @team_1_color = config["color1"]
-        @team_2_color = config["selected_color"]
-    
+    @team_1_color = config["color" + arr[1]]
+    @team_2_color = config["color" + arr[2]]
     # Create players for each team
     for i in [1..arr[0]] by 1
       if i % 2 is 0
@@ -102,9 +97,9 @@ class Game
   # Update game action
   update_game: (arr) ->
     @ball.setPosition arr[0], arr[1]
-    @team_1_score = arr[arr.length-3]
-    @team_2_score = arr[arr.length-2]
-    @time = arr[arr.length-4]
+    @team_1_score = arr[arr.length-2]
+    @team_2_score = arr[arr.length-1]
+    @time = arr[arr.length-3]
     @time_display.text(90 - Math.floor(@time/20))
     @team_1_score_display.text(@team_1_score)
     @team_2_score_display.text(@team_2_score)
@@ -143,10 +138,16 @@ do_action = (str) ->
   tempAction = new parse_action(str)
   switch tempAction.type
     when "chose"
-      #TODO alter this and the server to recive the user id and the lookup
-      current_game.socket.send Math.floor(Math.random()*4+1)  if tempAction.data[0] is "1"
-      current_game.socket.send("Irrelevant")
-      current_game.socket.send("P")
+      #TODO lookup has to be sent to the server to verify the user id
+      #TODO make into function
+      current_game.socket.send(parseInt(config["signed_on"]))
+      if tempAction.data[0] is "1"
+        current_game.socket.send(parseInt(config['selected_color']))
+
+      if parseInt(config["signed_on"]) == 1
+        if tempAction.data[0] is "1"
+          current_game.socket.send (config['team_name'])
+        current_game.socket.send(config['user_id'])
     when "update"
       current_game.update_game tempAction.data
     when "setup"

@@ -5,10 +5,13 @@ require 'dm-migrations'
 desc "Recreate database from DataMapper model"
 task :reset do
   DataMapper.finalize.auto_migrate!   
+  puts "Database reset completed"
 end
 task :migrate do
   DataMapper.finalize.auto_upgrade!   
+  puts "Upgrade completed"
 end
 task :reset_games do
   Game.all.destroy!
+  puts "Game index has been reset"
 end
