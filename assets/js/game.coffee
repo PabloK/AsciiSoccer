@@ -66,6 +66,10 @@ class Game
     @time_display = $("#time")
     @team_1_score_display = $("#team1")
     @team_2_score_display = $("#team2")
+    @team_1_name_final_display = $("#team1namefinal")
+    @team_2_name_final_display = $("#team2namefinal")
+    @team_1_name_display = $("#team1name")
+    @team_2_name_display = $("#team2name")
     @team_1_score = 0
     @team_2_score = 0
     @team_1_color=config["color1"]
@@ -76,17 +80,22 @@ class Game
 
   # Initiate the game action
   setup: (arr) ->
+    console.log(arr)
     @ball.setPosition 50, 15
 
     # Set correct color for each team
     @team_1_color = config["color" + arr[1]]
     @team_2_color = config["color" + arr[2]]
+    @team_1_name_final_display.text(arr[3])
+    @team_2_name_final_display.text(arr[4])
+    @team_1_name_display.text(arr[3])
+    @team_2_name_display.text(arr[4])
     # Create players for each team
     for i in [1..arr[0]] by 1
       if i % 2 is 0
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_2_color
+        @set_player arr[5 + (i - 1) * 4], arr[6 + (i - 1) * 3], @team_2_color
       else
-        @set_player arr[3 + (i - 1) * 4], arr[4 + (i - 1) * 3], @team_1_color
+        @set_player arr[5 + (i - 1) * 4], arr[6 + (i - 1) * 3], @team_1_color
 
   # Create and add a new player to the game 
   set_player: (name, character, color) ->

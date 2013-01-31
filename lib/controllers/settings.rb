@@ -16,7 +16,7 @@ class SettingsCotroller < Sinatra::Base
   end
 
   post '/' do
-    if @user.update!(:name => params[:name], :color => params[:color])
+    if @user.update(:name => params[:name], :color => params[:color])
       popup("Your settings were successfully saved.")
     end
     @error = @user.errors

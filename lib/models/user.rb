@@ -13,7 +13,7 @@ class User
   
   validates_format_of :email , :as => /^.*@.*\..*{3,}$/i, :message => "Email adress format must be valid."
   validates_length_of :email , :within => 5..250, :message => "Email needs to be between 5 and 250 characters."
-  validates_length_of :name , :within => 0..20, :message => "A team name must have be between 3 and 20 characters long."
+  validates_length_of :name , :within => 3..10, :message => "A team name must have be between 3 and 10 characters long."
 
   def name
     if @name == '' or @name == nil
