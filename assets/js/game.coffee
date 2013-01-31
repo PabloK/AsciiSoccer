@@ -78,7 +78,6 @@ class Game
   setup: (arr) ->
     @ball.setPosition 50, 15
 
-    console.log(arr)
     # Set correct color for each team
     @team_1_color = config["color" + arr[1]]
     @team_2_color = config["color" + arr[2]]
@@ -126,6 +125,12 @@ class Game
   # Play start sound
   whistle: () ->
     $("#whistle")[0].play()
+    setTimeout(
+      (()-> current_game.music())
+      ,2550)
+    
+  music: ()->
+    $("#theme")[0].play()
   
   show_endscreen: () ->
     #TODO and sound depending on outcome
@@ -153,6 +158,7 @@ do_action = (str) ->
     when "setup"
       current_game.setup(tempAction.data)
       current_game.whistle()
+      
     when "countdown"
       #TODO countdown action with sound
       null
@@ -174,16 +180,6 @@ draw_court = ->
   ctx.fillRect(22, 22, 956, 556)
   ctx.fillRect(0, 20 * 12, 1000, 20*6)
 
-# Preload the sound
-preload_sound = ->
-  $.ajax({
-    url: "/audio/whistle.mp3",
-    error: () ->
-      alert("An error occured while loading the sound.")
-      return
-  })
-  return
-
 #The game variables
 current_game = undefined
 canvas = undefined
@@ -191,10 +187,8 @@ ctx = undefined
 socket = undefined
 config = []
 
-
 #Initiate game and more
 $(document).ready ->
-  preload_sound()
   
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")

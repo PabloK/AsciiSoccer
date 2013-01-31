@@ -4,7 +4,9 @@
 %link{:rel => 'stylesheet', :type => 'text/css', :href => '/css/styles.css'}
 %link{:href => "http://fonts.googleapis.com/css?family=Press+Start+2P&subset=latin,greek,latin-ext,cyrillic", :rel => "stylesheet", :type => "text/css"}
 %audio{:id => "whistle", :preload => "true", :autobuffer => true}
-  %source{:src => "/audio/whistle.mp3"}
+  %source{:src => "/audio/whistle.wav"}
+%audio{:id => "theme", :preload => "true", :autobuffer => true}
+  %source{:src => "/audio/themesong.ogg"}
 #gameConfig
   #current_player=@game.number_of_players
   #port=@game.port
