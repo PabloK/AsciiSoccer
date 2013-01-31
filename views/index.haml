@@ -27,12 +27,14 @@
     -if session[:user]
       %button.linebutton#loginbutton{:onClick => "window.location='/log/out'"} Log out
       %button.linebutton#loginbutton{:onClick => "popup({url:'/settings'})"} Settings
+      %button.linebutton#loginbutton{:onClick => "popup({url:'/credits'})"} Credits
       .article
         .heading
           %h2.shadow-left Friends
     -else
       %button.linebutton#signup{:onClick => "popup({url:'/signupform'})"} Sign up
       %button.linebutton#loginbutton{:onClick => "popup({url:'/loginform'})"} Log in
+      %button.linebutton#loginbutton{:onClick => "popup({url:'/credits'})"} Credits
 .row
   .col8
     .article

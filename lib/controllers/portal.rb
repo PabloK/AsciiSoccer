@@ -31,4 +31,8 @@ class PortalController < Sinatra::Base
     @submit = '/signup'
     haml :login, :layout => false
   end
+
+  get '/credits' do
+    haml :credits, :layout => false
+  end
 end

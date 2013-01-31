@@ -1,0 +1,46 @@
+.scroller
+  .heading
+    %h2 Production 
+  .names
+    %h4 Pablo Karlsson
+  
+  .heading
+    %h2 Concept and Development
+  .names
+    %h4 Pablo Karlsson
+    %h4 Daniel Kling
+    %h4 Petter Hagkvist
+    %h4 Jan Hellman
+    %h4 Oscar Fröberg
+    %h4 Andreas Midestad
+
+  .heading
+    %h2 Music and Sounds
+  .names
+    %h4 Matts Leandersson
+  
+  .heading
+    %h2 Logo and Artwork
+  .names
+    %h4 Andreas Lewandowski
+    %h4 Pablo Karlsson
+  
+  .heading
+    %h2 Special thanks to
+  .names
+    %h4 Tove Jomer
+    %h4 Robert Carlsson
+    %h4 Björn Hässler
+    %h4 Samuel Rhamqvist
+    %h4 Marcus Stenbeck
+    %h4 Victor Sand
+    %h4 Otilia Molin
+    %h4 Tomas Almgren
+    %h4 Anders Kling
+  .heading
+    %h2 AsciiSoccer
+  .end
+    
+%button.button{:onclick => "$('#cover-all').hide(); return false;"} Close
+:javascript
+  $(".scroller").animate({ scrollTop: 4000 }, 600000,'linear');
