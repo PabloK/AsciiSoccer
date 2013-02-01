@@ -1,10 +1,10 @@
 .heading
   %h2=@text
-%form{:id => "#{@type}form",:method => "post", :action => "/#{@submit}"}
+%form{:id => "#{@type}form",:method => "post"}
   %label Email: 
-  %input{:name => "email"}
+  %input{:name => "email", :onKeyPress => "return false;"}
   %label Password: 
-  %input{:type => "password", :name => "password"}
+  %input{:type => "password", :name => "password", :onKeyPress => "return false;"}
   %div
     %button.button{:type => "button",:onclick => "submitForm('##{@type}form','#{@submit}');"}=@text
     -if @login

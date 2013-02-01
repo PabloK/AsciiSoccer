@@ -75,12 +75,12 @@ class Game
     @team_1_color=config["color1"]
     @team_2_color=config["color2"]
     @ball = new Ball("Ball", "O", config["white"])
+    @maximum_players = parseInt(config["maximum_players"])
     @players = []
     @socket = undefined
 
   # Initiate the game action
   setup: (arr) ->
-    console.log(arr)
     @ball.setPosition 50, 15
 
     # Set correct color for each team
@@ -91,7 +91,7 @@ class Game
     @team_1_name_display.text(arr[3])
     @team_2_name_display.text(arr[4])
     # Create players for each team
-    for i in [1..arr[0]] by 1
+    for i in [1..@maximum_players] by 1
       if i % 2 is 0
         @set_player arr[5 + (i - 1) * 4], arr[6 + (i - 1) * 3], @team_2_color
       else
@@ -147,6 +147,14 @@ class Game
     $("#team2finalscore").text(@team_2_score)
     @message.show()
 
+countDown = (int) ->
+  unless int == 0
+    $("#onscreen").html("<span>"+int+"<span>")
+    int--
+    setTimeout((()->countDown(int)),800)
+  else
+    $("#onscreen").html("<span>Go!!<span>")
+
 #Execute actions from the server as they arrive
 do_action = (str) ->
   tempAction = new parse_action(str)
@@ -165,18 +173,21 @@ do_action = (str) ->
     when "update"
       current_game.update_game tempAction.data
     when "setup"
+      $("#onscreen").hide()
       current_game.setup(tempAction.data)
       current_game.whistle()
       
-    when "countdown"
-      #TODO countdown action with sound
-      null
     when "already_started"
       alert("This game is already underway")
     when "end"
       if not current_game.ended
         current_game.ended = true
         current_game.show_endscreen()
+    when "count_down"
+      countDown(3)
+    when "update_con"
+      players_left_to_connect = current_game.maximum_players - parseInt(tempAction.data[0])
+      $("#onscreen").html("<span>Waiting for " + players_left_to_connect + " players to connect...</span>")
     else
 
 #Draw the court
@@ -205,7 +216,7 @@ $(document).ready ->
   for element in $("#gameConfig").children()
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
-  
+
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])
