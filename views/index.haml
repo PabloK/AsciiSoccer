@@ -6,7 +6,7 @@
         %h1 Play VS.
       %div.center-text
         -if session[:user]
-          %button.button Friend
+          %button.button.inactive Friend
         -else 
           %button.button.inactive Friend
         %button.button{:onclick => "window.location='/game_queue/'"} Random
