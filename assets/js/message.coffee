@@ -14,11 +14,10 @@ popup = (configure) ->
     setMessage(configure["text"])
 
 closeMessage = ()->
-  console.log("closing");
   $("#cover-all").hide()
   return false
 
-submitForm = (formName, action) -> 
+submitForm = (formName, action) ->
   form = $(formName)
   console.log(form)
   form.attr("action", action)
@@ -32,3 +31,4 @@ $(document).ready((->
       if code == 27
         closeMessage()
   ))))
+

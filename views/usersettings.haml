@@ -1,6 +1,7 @@
 .heading
   %h2="Settings"
-%form{:id => "settingsform",:method => "post"}
+%form{:id => "settingsform",:method => "post", :action => "/settings"}
+  %input.hidden{:type => "submit"}
   %label Name: 
   %input{:name => "name", :value => @user.name || ""}
   %label Team color: 

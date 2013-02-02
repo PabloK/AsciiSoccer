@@ -209,7 +209,7 @@ config = []
 
 #Initiate game and more
 $(document).ready ->
-  
+
   canvas = document.getElementById("canvas")
   ctx = canvas.getContext("2d")
 
@@ -254,5 +254,7 @@ $(document).ready ->
         current_game.socket.send "a"
       when 68
         current_game.socket.send "d"
+      when 83
+        current_game.socket.send "s"
       else
         console.log "Undefined key: " + e.keyCode
