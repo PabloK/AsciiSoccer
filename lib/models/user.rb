@@ -10,7 +10,7 @@ class User
   property :lookup,         String,   :lazy => false
   property :recover_key,    String,   :lazy => false
   property :color,          Integer,  :default => 1
-  property :login_time,     DateTime, :default => DateTime.now
+  property :last_activity,     DateTime, :default => DateTime.now
   
   validates_format_of :email , :as => /^.*@.*\..*{3,}$/i, :message => "Email adress format must be valid."
   validates_length_of :email , :within => 5..250, :message => "Email needs to be between 5 and 250 characters."
@@ -32,7 +32,7 @@ class User
   end
 
   def new_lookup!
-    update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join, :login_time => DateTime.now)
+    update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join, :last_activity => DateTime.now)
   end
 
   def password
@@ -48,15 +48,14 @@ class User
     super email.downcase
   end
 
-  def update_login_time
-    puts @login_time
-    if @login_time < 10.minutes.ago
-      update!(:login_time => DateTime.now)
+  def update_last_activity
+    puts @last_activity
+    if @last_activity < 10.minutes.ago
+      update!(:last_activity => DateTime.now)
     end
   end
 
   def self.users_online
-    return User.count(:login_time.gt => (10.minutes.ago))
-    #TODO add a class var to se how log time since this was updated
+    return User.count(:last_activity.gt => (10.minutes.ago))
   end
 end

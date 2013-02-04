@@ -30,7 +30,7 @@ class  Sinatra::Base
         halt 404
       end
       if @user
-        @user.update_login_time
+        @user.update_last_activity
       end
     end
 
