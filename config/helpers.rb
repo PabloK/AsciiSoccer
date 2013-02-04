@@ -20,4 +20,19 @@ class  Sinatra::Base
     flash[:message] = haml :message, :layout => false
     redirect '/'
   end
+
+  def lookup_user
+    if session[:user]
+      @user = User.get(session[:user])
+      if @user == nil or not @user.valid?(session[:lookup])
+        session.delete(:user)
+        session.delete(:lookup)
+        halt 404
+      end
+      if @user
+        @user.update_login_time
+      end
+    end
+
+  end
 end

@@ -5,11 +5,12 @@ class User
   include BCrypt
   property :id,             Serial
   property :name,           String
-  property :email,          String, :required => true, :unique => true
-  property :password_hash,  String, :required => true, :lazy => true
-  property :lookup,         String, :lazy => false
-  property :recover_key,    String, :lazy => false
-  property :color,          Integer, :default => 1
+  property :email,          String,   :required => true, :unique => true
+  property :password_hash,  String,   :required => true, :lazy => true
+  property :lookup,         String,   :lazy => false
+  property :recover_key,    String,   :lazy => false
+  property :color,          Integer,  :default => 1
+  property :login_time,     DateTime, :default => DateTime.now
   
   validates_format_of :email , :as => /^.*@.*\..*{3,}$/i, :message => "Email adress format must be valid."
   validates_length_of :email , :within => 5..250, :message => "Email needs to be between 5 and 250 characters."
@@ -31,7 +32,7 @@ class User
   end
 
   def new_lookup!
-    update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join)
+    update!(:lookup => (0...50).map{ ('a'..'z').to_a[rand(26)]}.join, :login_time => DateTime.now)
   end
 
   def password
@@ -47,4 +48,15 @@ class User
     super email.downcase
   end
 
+  def update_login_time
+    puts @login_time
+    if @login_time < 10.minutes.ago
+      update!(:login_time => DateTime.now)
+    end
+  end
+
+  def self.users_online
+    return User.count(:login_time.gt => (10.minutes.ago))
+    #TODO add a class var to se how log time since this was updated
+  end
 end

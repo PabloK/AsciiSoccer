@@ -13,10 +13,14 @@
   .col3.last
 -if session[:user]
   .row
-    .col12
+    .col8
       .article
         .heading
           %h2.shadow-bottom="Logged in as \"#{@user.name}\""
+    .col4.last
+      .article
+        .heading
+          %h2.shadow-bottom="Players: #{User.users_online}"
 .row
   .col8
     .article
