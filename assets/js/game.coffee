@@ -112,6 +112,13 @@ class Game
       else
         @set_player arr[5 + (i - 1) * 4], @team_1_color
 
+    # Start the game audio
+    Audio.whistle();
+    setTimeout(
+      (()-> Audio.music())
+      ,2550)
+
+
   # Create and add a new player to the game 
   set_player: (name, color) ->
     is_current_player = (@players.length + 1) == parseInt(config["current_player"])
@@ -147,15 +154,12 @@ class Game
   init_socket: (server,port) ->
     @socket = new Connect(server,port)
 
-  # Play start sound
-  whistle: () ->
-    $("#whistle")[0].play()
-    setTimeout(
-      (()-> current_game.music())
-      ,2550)
-    
-  music: ()->
-    $("#theme")[0].play()
+  @toggleAudio: ->
+    newValue = Audio.toggle()
+    if (newValue)
+      $("#volumeController").text("Sound off")
+    else
+      $("#volumeController").text("Sound on")
   
   show_endscreen: () ->
     #TODO and sound depending on outcome
@@ -191,7 +195,6 @@ do_action = (str) ->
     when "setup"
       $("#onscreen").hide()
       current_game.setup(tempAction.data)
-      current_game.whistle()
       
     when "already_started"
       alert("This game is already underway")
