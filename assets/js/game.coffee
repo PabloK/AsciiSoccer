@@ -13,8 +13,23 @@ class Player
     @Y = Y
 
   draw: ->
+    if (@is_current_player)
+      ctx.fillStyle = config["border_color"]
+    else
+      ctx.fillStyle = config["black"]
+    @drawBorder()
     ctx.fillStyle = @color
+
+    ctx.fillRect 10 * (@X - 1) + Player.BORDER_SIZE,
+                 20 * (@Y - 1) + Player.BORDER_SIZE,
+                 10 - 2 * Player.BORDER_SIZE,
+                 20 - 2 * Player.BORDER_SIZE
+
+  drawBorder: ->
+    # "border_size" pixels wide border
     ctx.fillRect 10 * (@X - 1), 20 * (@Y - 1), 10, 20
+
+Player.BORDER_SIZE = 2
 
 class Ball extends Player
   constructor: (name, color) ->
@@ -99,7 +114,6 @@ class Game
 
   # Create and add a new player to the game 
   set_player: (name, color) ->
-    console.log("setp: " + name, color)
     is_current_player = (@players.length + 1) == parseInt(config["current_player"])
     temp_player = new Player(name, color, is_current_player)
     @players.push temp_player
