@@ -16,19 +16,30 @@
         %button.button{:onclick => "window.location='/game_queue/'"} Play again
         %button.button{:onclick => "window.location='/'"} Back
     #onscreen
-      %span Waiting for other players...
-
+      #waiting Waiting for other players
+      .keys
+        %span.left arrows / numpad
+        %span.middle - 
+        %span.right move around
+      .keys
+        %span.left a / d
+        %span.middle -
+        %span.right dribble up / down
+      .keys
+        %span.left s
+        %span.middle -
+        %span.right shoot 
     #timebox
-      %center
-        %span#time 90
-        %span :
-        %span 00
+      %span#time 90
+      %span :
+      %span 00
     #stage
       %canvas{:id => "canvas", :width => 1000, :height => 600} 
     #score
-      %center
-        %span.accent-text#team1name Team 1
-        %span#team1 0
-        %span -
-        %span#team2 0
-        %span.accent-text#team2name Team 2
+      %span.accent-text#team1name Team 1
+      %span#team1 0
+      %span -
+      %span#team2 0
+      %span.accent-text#team2name Team 2
+    #menu
+      %button.button{:onclick => ""} S
