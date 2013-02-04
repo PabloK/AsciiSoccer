@@ -151,11 +151,11 @@ class Game
 
 countDown = (int) ->
   unless int == 0
-    $("#onscreen").html("<span>"+int+"<span>")
+    $("#waiting").html("<span>"+int+"<span>")
     int--
     setTimeout((()->countDown(int)),800)
   else
-    $("#onscreen").html("<span>Go!!<span>")
+    $("#waiting").html("<span>Go!!<span>")
 
 #Execute actions from the server as they arrive
 do_action = (str) ->
@@ -189,7 +189,7 @@ do_action = (str) ->
       countDown(3)
     when "update_con"
       players_left_to_connect = current_game.maximum_players - parseInt(tempAction.data[0])
-      $("#onscreen").html("<span>Waiting for " + players_left_to_connect + " players to connect...</span>")
+      $("#waiting").html("<span>Waiting for " + players_left_to_connect + " players to connect...</span>")
     else
 
 #Draw the court
