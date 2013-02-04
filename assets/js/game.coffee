@@ -1,12 +1,12 @@
 #player object
 class Player
-  constructor: (name, character, color) ->
+  constructor: (name, color, is_current_player) ->
     color = 0  if typeof color is "undefined"
-    @character = character
     @name = name
     @color = color
     @X = 0
     @Y = 0
+    @is_current_player = is_current_player
 
   setPosition: (X, Y) ->
     @X = X
@@ -17,8 +17,8 @@ class Player
     ctx.fillRect 10 * (@X - 1), 20 * (@Y - 1), 10, 20
 
 class Ball extends Player
-  constructor: (name, character, color) ->
-    super(name, character, color)
+  constructor: (name, color) ->
+    super(name, color)
 
   draw: ->
     ctx.fillStyle = @color
@@ -74,7 +74,7 @@ class Game
     @team_2_score = 0
     @team_1_color=config["color1"]
     @team_2_color=config["color2"]
-    @ball = new Ball("Ball", "O", config["white"])
+    @ball = new Ball("Ball", config["white"])
     @maximum_players = parseInt(config["maximum_players"])
     @players = []
     @socket = undefined
@@ -93,13 +93,15 @@ class Game
     # Create players for each team
     for i in [1..@maximum_players] by 1
       if i % 2 is 0
-        @set_player arr[5 + (i - 1) * 4], arr[6 + (i - 1) * 3], @team_2_color
+        @set_player arr[5 + (i - 1) * 4], @team_2_color
       else
-        @set_player arr[5 + (i - 1) * 4], arr[6 + (i - 1) * 3], @team_1_color
+        @set_player arr[5 + (i - 1) * 4], @team_1_color
 
   # Create and add a new player to the game 
-  set_player: (name, character, color) ->
-    temp_player = new Player(name, character, color)
+  set_player: (name, color) ->
+    console.log("setp: " + name, color)
+    is_current_player = (@players.length + 1) == parseInt(config["current_player"])
+    temp_player = new Player(name, color, is_current_player)
     @players.push temp_player
 
   # Update game action

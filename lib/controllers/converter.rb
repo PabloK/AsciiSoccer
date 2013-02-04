@@ -17,7 +17,10 @@ class CoffeeJsConverter < Sinatra::Base
     get '/*.js' do
       content_type 'text/javascript', :charset => 'utf-8'
       filename = params[:splat].first
-      return Uglifier.compile(coffee filename.to_sym) if ENV['RACK_ENV'] == 'production'
-      return coffee filename.to_sym if ENV['RACK_ENV'] == 'development'
+      if ENV['RACK_ENV'] == 'production'
+        Uglifier.compile(coffee filename.to_sym) 
+      else
+        coffee filename.to_sym
+      end
     end
 end
