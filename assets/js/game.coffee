@@ -93,6 +93,43 @@ class Game
     @maximum_players = parseInt(config["maximum_players"])
     @players = []
     @socket = undefined
+    @court = @preRenderCourt()
+
+  preRenderCourt: () ->
+    
+    buffer = document.createElement('canvas')
+    buffer.height = 600
+    buffer.width  = 1000
+    bctx = buffer.getContext('2d')
+
+    bctx.fillStyle = config["dark-grass"]
+    bctx.fillRect(0, 0, 1000, 600)
+    bctx.fillStyle = config["light-grass"]
+    for i in [0..26] by 2
+      bctx.fillRect((i)*45, 0, 45, 600)
+    bctx.fillStyle = config["background"]
+    bctx.fillRect(0, 0, 20, 600)
+    bctx.fillRect(980, 0, 20, 600)
+    bctx.fillRect(20, 580, 980, 20)
+    bctx.fillRect(20, 0, 980, 20)
+    bctx.fillStyle = config["white"]
+    bctx.fillRect(20, 20, 2, 558)
+    bctx.fillRect(978, 20, 2, 558)
+    bctx.fillRect(20, 20, 958, 2)
+    bctx.fillRect(20, 578, 958, 2)
+    bctx.fillStyle = config["light-grass"]
+    bctx.fillRect(0, 240, 22, 120)
+    bctx.fillStyle = config["dark-grass"]
+    bctx.fillRect(978, 240, 22, 120)
+    bctx.fillStyle = config["white"]
+    bctx.fillRect(978, 234, 6, 6)
+    bctx.fillRect(978, 360, 6, 6)
+    bctx.fillRect(16, 234, 6, 6)
+    bctx.fillRect(16, 360, 6, 6)
+    bctx.fillStyle = "#6FF56F"
+    bctx.fillRect(494, 22, 2, 558)
+
+    return buffer
 
   # Initiate the game action
   setup: (arr) ->
@@ -142,12 +179,12 @@ class Game
     while i < @players.length
       @players[i].setPosition arr[i * 2 + 2], arr[3 + i * 2]
       i++
-    
-    draw_court()
+
     @draw()
 
   # Draw the game board
   draw: () ->
+    ctx.drawImage(@court,0,0)
     @ball.draw()
     i = 0
     while i < @players.length
@@ -215,16 +252,6 @@ do_action = (str) ->
       players_left_to_connect = current_game.maximum_players - parseInt(tempAction.data[0])
       $("#waiting").html("<span>Waiting for " + players_left_to_connect + " players to connect...</span>")
     else
-
-#Draw the court
-draw_court = ->
-  ctx.fillStyle = config["background"]
-  ctx.fillRect(0, 0, 1000, 600)
-  ctx.fillStyle = config["white"]
-  ctx.fillRect(20, 20, 960, 560)
-  ctx.fillStyle = config["foreground"]
-  ctx.fillRect(22, 22, 956, 556)
-  ctx.fillRect(0, 20 * 12, 1000, 20*6)
 
 #The game variables
 current_game = undefined
