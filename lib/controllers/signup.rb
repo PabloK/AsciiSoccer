@@ -1,4 +1,4 @@
-class SignupCotroller < Sinatra::Base
+class SignupController < Sinatra::Base
   post '/' do
     unless valid_password(params[:password])
       @error = [["Password needs to be at least eight characters long."]]

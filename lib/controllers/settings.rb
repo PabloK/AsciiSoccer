@@ -1,4 +1,4 @@
-class SettingsCotroller < Sinatra::Base
+class SettingsController < Sinatra::Base
 
   before do
     lookup_user
@@ -15,6 +15,15 @@ class SettingsCotroller < Sinatra::Base
     @error = @user.errors
     flash[:message] = haml :error, :layout => false
     redirect '/'
+  end
+
+  post '/audio' do
+    # TODO: Errors are not handled using ajax, fix?
+    unless @user.update(:audio_muted => params[:play_audio] != "true")
+      @error = @user.errors
+      flash[:message] = haml :error, :layout => false
+      redirect '/'
+    end
   end
 
 end

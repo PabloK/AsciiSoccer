@@ -34,11 +34,11 @@ map '/' do
   end
 
   map '/signup' do
-    run SignupCotroller
+    run SignupController
   end
 
   map '/settings' do
-    run SettingsCotroller
+    run SettingsController
   end
 
   map '/recover' do

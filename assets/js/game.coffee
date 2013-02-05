@@ -157,9 +157,13 @@ class Game
   init_socket: (server,port) ->
     @socket = new Connect(server,port)
 
-  @toggleAudio: (newValue) ->
-    newValue = Audio.toggle(newValue)
-    if (newValue)
+  @toggleAudio: (muteAudio) ->
+    isAudioMuted = Audio.toggle(muteAudio)
+    # Send ajax request if toggeling only
+    if muteAudio == undefined
+      $.post("/settings/audio", {play_audio: !isAudioMuted})
+
+    if (isAudioMuted)
       $("#volumeController").text("Sound off")
     else
       $("#volumeController").text("Sound on")
