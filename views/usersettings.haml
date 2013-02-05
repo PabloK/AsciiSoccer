@@ -21,6 +21,8 @@
   :checked => @user.color == 7 ? "checked" : nil}  
   %input.colorpicker.color8{:type => "radio", :name => "color", :value => 8, 
   :checked => @user.color == 8 ? "checked" : nil}  
+  %label Play audio:
+  %input{:type => "checkbox", :name => "play_audio", :checked => !@user.audio_muted}
   %div
     %button.button{:type => "button",:onClick => "submitForm('#settingsform','/settings');"} Save
     %button.button{:type => "button",:onClick => "closeMessage();"} Close

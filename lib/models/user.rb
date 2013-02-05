@@ -10,6 +10,7 @@ class User
   property :lookup,         String, :lazy => false
   property :recover_key,    String, :lazy => false
   property :color,          Integer, :default => 1
+  property :audio_muted,    Boolean, :required => true, :default => false
   
   validates_format_of :email , :as => /^.*@.*\..*{3,}$/i, :message => "Email adress format must be valid."
   validates_length_of :email , :within => 5..250, :message => "Email needs to be between 5 and 250 characters."

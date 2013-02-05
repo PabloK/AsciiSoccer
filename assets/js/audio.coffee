@@ -20,7 +20,6 @@ class Audio
     $("audio").each(() ->
       if (newValue == undefined)
         newValue = !$(this)[0].muted
-      #TODO: Send ajax request
       $(this)[0].muted = newValue
       true
     )

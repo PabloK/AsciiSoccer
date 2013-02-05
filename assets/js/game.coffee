@@ -113,6 +113,9 @@ class Game
         @set_player arr[5 + (i - 1) * 4], @team_1_color
 
     # Start the game audio
+    # TODO: Make the audio part work without these toggles
+    Audio.toggle()
+    Audio.toggle()
     Audio.whistle();
     setTimeout(
       (()-> Audio.music())
@@ -154,8 +157,8 @@ class Game
   init_socket: (server,port) ->
     @socket = new Connect(server,port)
 
-  @toggleAudio: ->
-    newValue = Audio.toggle()
+  @toggleAudio: (newValue) ->
+    newValue = Audio.toggle(newValue)
     if (newValue)
       $("#volumeController").text("Sound off")
     else
@@ -236,6 +239,9 @@ $(document).ready ->
     jQElement = $(element)
     config[jQElement.attr('id')] = jQElement.text()
 
+  #Handling audio
+  mutedAudio = config["audio_muted"] == "true"
+  Game.toggleAudio(mutedAudio) 
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])

@@ -18,9 +18,11 @@
     #user_id=@user.id
     #team_name=@user.name
     #selected_color=@user.color
+    #audio_muted=@user.audio_muted
   -else
     #signed_on 0
     #team_name="Team #{@game.number_of_players}"
     #selected_color=1
+    #audio_muted=false
   -$config.each do |key,value|
     %div{:id => key}=value
