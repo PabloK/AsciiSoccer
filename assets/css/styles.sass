@@ -211,6 +211,37 @@ input:focus
   width: 25px
   height: 25px
 
+.audiocheckbox, .audiocheckbox:active
+  font-size: 16px
+  position: relative
+  border: 5px solid $white
+  display: inline-block
+  line-height: 1em
+  margin: 0
+  padding: 0
+  width: 25px
+  height: 25px
+  vertical-align: text-top
+  background: -webkit-linear-gradient(top, rgba(255,255,255,0.4), rgba(255,255,255,0.1))
+  -webkit-appearance: none
+  -webkit-border-radius: 3px
+  border-radius: 4px
+  -moz-box-shadow: 3px 3px $black
+  -webkit-box-shadow: 3px 3px $black
+  box-shadow: 3px 3px $black
+ 
+.audiocheckbox:checked::after
+  position: absolute
+  content: ''
+  left: 15%
+  top: -10%
+  height: 40%
+  width: 90%
+  border-bottom: 2px solid #fff
+  border-left: 2px solid #fff
+  -webkit-box-shadow: -1px 1px 0 rgba(0,0,0,0.8)
+  -webkit-transform: rotate(-45deg)
+
 .color1
   background-color: $color1
 
