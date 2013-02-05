@@ -1,22 +1,48 @@
 .row.shadow
-  .col3
-  .col6
-    .box
-      %div.center-text
-        %h1 Play VS.
-      %div.center-text
-        -if session[:user]
-          %button.button.inactive Friend
-        -else 
-          %button.button.inactive Friend
-        %button.button{:onclick => "window.location='/game_queue/'"} Random
-  .col3.last
+  .col12
+    .box#game_menu_box
+      #game_menu
+        %div.center-text
+          %h1 Play VS.
+        %div.center-text
+          -if session[:user]
+            %button.button.inactive Friend
+          -else 
+            %button.button.inactive Friend
+          %button.button{:onclick => "window.location='/game_queue/'"} Random
+      #border
+      #server_info
+        //TODO Create a structure to cashe this data
+        .info
+          %span.data users online    
+          %span :
+          %span="#{User.users_online}"
+        .info
+          %span.data mean wait (min)
+          %span :
+          %span="#{Game.mean_wait}"
+        .info
+          %span.data current games
+          %span : 
+          %span=Game.current_games
+        .info
+          %span.data queued games
+          %span : 
+          %span=Game.queued_games
+        .info
+          %span.data server status
+          %span : 
+          %span alive
+        .info
+          %span.data league end (days)
+          %span : 
+          %span 21
 -if session[:user]
   .row
     .col12
       .article
         .heading
-          %h2.shadow-bottom="Logged in as \"#{@user.name}\""
+          %h2.shadow-bottom="Welcome #{@user.name}!"
 .row
   .col8
     .article

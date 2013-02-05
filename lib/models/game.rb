@@ -6,6 +6,8 @@ class Game
   property :number_of_players, Integer, :required => true, :default => 0
   property :created_date, DateTime, :required => true
   property :maximum_players, Integer, :required => true, :default => 2
+  property :waittime, Float, :required => true, :default => 0
+  property :finnsihsed, Boolean, :required => true, :default => false
 
   def self.generate_game!
     game = Game.new
@@ -50,6 +52,18 @@ class Game
     return false if self.number_of_players >= self.maximum_players
     new_number = self.number_of_players + 1
     return self.update(:number_of_players => new_number, :created_date => Time.now )
+  end
+
+  def self.current_games
+    Game.count(:finnsihsed => false)
+  end
+
+  def self.queued_games
+    Game.count(:finnsihsed => false, :conditions => ['number_of_players != maximum_players'])
+  end
+
+  def self.mean_wait
+    Game.avg(:waittime, :conditions => ['created_date >= ?', 10.minutes.ago])
   end
 
 end

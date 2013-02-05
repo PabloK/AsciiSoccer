@@ -1,14 +1,7 @@
 class SettingsCotroller < Sinatra::Base
 
   before do
-    if session[:user]
-      @user = User.get(session[:user])
-      if @user == nil or not @user.lookup_valid?(session[:lookup])
-        session.delete(:user)
-        session.delete(:lookup)
-        halt 404
-      end
-    end
+    lookup_user
   end
 
   get '/' do
