@@ -1,3 +1,0 @@
-[submodule "AsciiSoccer-Models"]
-	path = AsciiSoccer-Models
-	url = https://pablok:$PASSWORD@github.com/PabloK/AsciiSoccer-Models.git
