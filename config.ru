@@ -1,6 +1,8 @@
 require './config/environment'
 require './config/helpers'
 require './lib/controllers'
+require 'coffee-script'
+require 'sass'
 
 map '/' do
 

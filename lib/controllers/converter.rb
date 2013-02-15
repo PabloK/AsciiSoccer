@@ -1,6 +1,3 @@
-require 'sass'
-require 'coffee-script'
-
 class SassCssConverter < Sinatra::Base
     sass_dir= File.dirname(__FILE__) + "/../../assets/css"
     set :views, sass_dir
