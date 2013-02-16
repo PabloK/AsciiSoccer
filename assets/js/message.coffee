@@ -25,10 +25,10 @@ submitForm = (formName, action) ->
   return false
 
 $(document).ready((->
+
   $(document).keydown((
     (e)->
       code = e.keyCode
       if code == 27
         closeMessage()
   ))))
-

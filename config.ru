@@ -17,6 +17,17 @@ map '/' do
     :urls => ["/img"],
     :cache_control => "public,max-age=#{365 * 24 * 3600}"
   }
+  use Rack::Static, {
+    :root => "public",
+    :urls => ["/vendor/js"],
+    :content_type => "application/javascript",
+    :cache_control => "public,max-age=#{24 * 3600}"
+  }
+  use Rack::Static, {
+    :root => "public",
+    :urls => ["/vendor/font"],
+    :cache_control => "public,max-age=#{365 * 24 * 3600}"
+  }
   use Rack::Session::Cookie, :secret => ENV['SESSION_SECRETE'], :expire_after => 30 * 3600
 
   map '/css' do
