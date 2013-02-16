@@ -1,3 +1,5 @@
+require 'sass'
+require 'uglifier'
 class SassCssConverter < Sinatra::Base
     sass_dir= File.dirname(__FILE__) + "/../../assets/css"
     set :views, sass_dir
