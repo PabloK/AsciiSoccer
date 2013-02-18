@@ -6,6 +6,8 @@ require 'sass'
 
 map '/' do
 
+  use Rack::Session::Cookie, :secret => ENV['SESSION_SECRETE'], :expire_after => 30 * 3600
+
   use Rack::Static, {
     :root => "public",
     :urls => ["/audio"],
@@ -28,14 +30,22 @@ map '/' do
     :urls => ["/vendor/font"],
     :cache_control => "public,max-age=#{365 * 24 * 3600}"
   }
-  use Rack::Session::Cookie, :secret => ENV['SESSION_SECRETE'], :expire_after => 30 * 3600
 
-  map '/css' do
-    run SassCssConverter
-  end
+  # Configure js & css to be generated or preloaded
+  if ENV['RACK_ENV'] == 'production'
+    use Rack::Static, {
+      :root => "public",
+      :urls => ["/css","/js"],
+      :cache_control => "public,max-age=#{365 * 24 * 3600}"
+    }
+  else
+    map '/css' do
+      run SassCssConverter
+    end
 
-  map '/js' do
-    run CoffeeJsConverter
+    map '/js' do
+      run CoffeeJsConverter
+    end
   end
 
   map '/' do

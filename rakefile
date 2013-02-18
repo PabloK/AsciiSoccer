@@ -15,3 +15,6 @@ task :reset_games do
   Game.all.destroy!
   puts "Game index has been reset!"
 end
+task :generate do
+  #TODO write code to generate js & css
+end

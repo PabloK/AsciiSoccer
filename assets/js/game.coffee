@@ -272,7 +272,7 @@ $(document).ready ->
 
   #Handling audio
   mutedAudio = config["audio_muted"] == "true"
-  Game.toggleAudio(mutedAudio) 
+  Game.toggleAudio(mutedAudio)
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])
