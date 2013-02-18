@@ -5,7 +5,7 @@ class SassCssConverter < Sinatra::Base
     set :views, sass_dir
     get '/*.css' do
       content_type 'text/css', :charset => 'utf-8'
-      cache_control :public, :max_age => 3600*24
+      cache_control :public, :max_age => 3600*24 if ENV['RACK_ENV'] == 'production'
       filename = params[:splat].first
       sass filename.to_sym
     end
@@ -16,7 +16,7 @@ class CoffeeJsConverter < Sinatra::Base
     set :views, File.dirname(__FILE__) + "/../../assets/js"
     get '/*.js' do
       content_type 'text/javascript', :charset => 'utf-8'
-      cache_control :public, :max_age => 3600*24
+      cache_control :public, :max_age => 3600*24 if ENV['RACK_ENV'] == 'production'
       filename = params[:splat].first
       if ENV['RACK_ENV'] == 'production'
         Uglifier.compile(coffee filename.to_sym) 

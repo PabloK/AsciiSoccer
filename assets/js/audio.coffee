@@ -24,4 +24,3 @@ class Audio
       true
     )
     newValue
-

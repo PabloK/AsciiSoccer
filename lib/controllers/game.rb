@@ -6,6 +6,8 @@ class GameController < Sinatra::Base
   end
 
   get '/:port' do
+    @muted = session[:muted] ||= false
+    puts @muted
     @game = Game.get(params[:port])
     if @game and @game.code == session[:code]
       if @game.join!

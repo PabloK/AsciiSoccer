@@ -94,6 +94,7 @@ class Game
     @players = []
     @socket = undefined
     @court = @preRenderCourt()
+    @controller = undefined
 
   preRenderCourt: () ->
     
@@ -204,6 +205,9 @@ class Game
       $("#volumeController").text("Sound off")
     else
       $("#volumeController").text("Sound on")
+
+  init_controller: () ->
+    @controller = new Controller(@socket)
   
   show_endscreen: () ->
     #TODO and sound depending on outcome
@@ -276,41 +280,4 @@ $(document).ready ->
   #Initiating game
   current_game = new Game()
   current_game.init_socket(config['host'],config['port'])
-
-  #Handling Input
-  $(window).keydown (e) ->
-    switch e.keyCode
-      when 40
-        current_game.socket.send 2
-      when 39
-        current_game.socket.send 6
-      when 38
-        current_game.socket.send 8
-      when 37
-        current_game.socket.send 4
-      when 99
-        current_game.socket.send 3
-      when 98
-        current_game.socket.send 2
-      when 97
-        current_game.socket.send 1
-      when 102
-        current_game.socket.send 6
-      when 101
-        current_game.socket.send 5
-      when 100
-        current_game.socket.send 4
-      when 105
-        current_game.socket.send 9
-      when 104
-        current_game.socket.send 8
-      when 103
-        current_game.socket.send 7
-      when 65
-        current_game.socket.send "a"
-      when 68
-        current_game.socket.send "d"
-      when 83
-        current_game.socket.send "s"
-      else
-        console.log "Undefined key: " + e.keyCode
+  current_game.init_controller()

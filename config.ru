@@ -8,27 +8,31 @@ map '/' do
 
   use Rack::Session::Cookie, :secret => ENV['SESSION_SECRETE'], :expire_after => 30 * 3600
 
+  cache_time = 0
+  cache_time = 3600*24*7 if ENV['RACK_ENV'] == 'production'
+
   use Rack::Static, {
     :root => "public",
     :urls => ["/audio"],
     :content_type => "audio/mpeg",
-    :cache_control => "public,max-age=#{365 * 24 * 3600}"
+    :cache_control => "public,max-age=#{cache_time}"
   }
   use Rack::Static, {
     :root => "public",
     :urls => ["/img"],
-    :cache_control => "public,max-age=#{365 * 24 * 3600}"
+    :cache_control => "public,max-age=#{cache_time}"
   }
   use Rack::Static, {
     :root => "public",
     :urls => ["/vendor/js"],
     :content_type => "application/javascript",
-    :cache_control => "public,max-age=#{24 * 3600}"
+    :cache_control => "public,max-age=#{cache_time}"
   }
   use Rack::Static, {
     :root => "public",
     :urls => ["/vendor/font"],
-    :cache_control => "public,max-age=#{365 * 24 * 3600}"
+    :content_type => "application/x-font-woff",
+    :cache_control => "public,max-age=#{cache_time}"
   }
 
   # Configure js & css to be generated or preloaded
