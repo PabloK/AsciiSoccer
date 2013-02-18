@@ -33,19 +33,15 @@ map '/' do
 
   # Configure js & css to be generated or preloaded
   if ENV['RACK_ENV'] == 'production'
-    use Rack::Static, {
-      :root => "public",
-      :urls => ["/css","/js"],
-      :cache_control => "public,max-age=#{365 * 24 * 3600}"
-    }
-  else
-    map '/css' do
-      run SassCssConverter
-    end
+    css_dir = "tmp/"
+  end
+  
+  map '/css' do
+    run SassCssConverter
+  end
 
-    map '/js' do
-      run CoffeeJsConverter
-    end
+  map '/js' do
+    run CoffeeJsConverter
   end
 
   map '/' do
