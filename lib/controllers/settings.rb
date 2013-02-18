@@ -19,7 +19,7 @@ class SettingsController < Sinatra::Base
 
   post '/audio' do
     # TODO: Errors are not handled using ajax, fix?
-    session[:muted] = params[:play_audio]
+    session[:muted] = params[:play_audio] != "true"
     if @user
       unless @user.update(:audio_muted => params[:play_audio] != "true")
         @error = @user.errors
