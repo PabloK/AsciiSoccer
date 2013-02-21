@@ -35,11 +35,6 @@ map '/' do
     :cache_control => "public,max-age=#{cache_time}"
   }
 
-  # Configure js & css to be generated or preloaded
-  if ENV['RACK_ENV'] == 'production'
-    css_dir = "tmp/"
-  end
-  
   map '/css' do
     run SassCssConverter
   end
