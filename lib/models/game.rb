@@ -7,7 +7,7 @@ class Game
   property :created_date, DateTime, :required => true
   property :maximum_players, Integer, :required => true, :default => 2
   property :waittime, Float, :required => true, :default => 0
-  property :finnsihsed, Boolean, :required => true, :default => false
+  property :finnished, Boolean, :required => true, :default => false
 
   def self.generate_game!
     game = Game.new
@@ -55,11 +55,11 @@ class Game
   end
 
   def self.current_games
-    Game.count(:finnsihsed => false)
+    Game.count(:finnished => false)
   end
 
   def self.queued_games
-    Game.count(:finnsihsed => false, :conditions => ['number_of_players != maximum_players'])
+    Game.count(:finnished => false, :conditions => ['number_of_players != maximum_players'])
   end
 
   def self.mean_wait
