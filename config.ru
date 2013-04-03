@@ -1,8 +1,21 @@
+#encoding: utf-8
+
+# Extrnal requirements / gems
+require 'rubygems'
+require 'active_support/core_ext/numeric/time'
+require 'active_support/core_ext/date_time/calculations'
+require 'sinatra/base'
+require 'sinatra/flash'
+require 'data_mapper'
+require 'pony'
+require 'coffee-script'
+require 'sass'
+
+# Internal requirements
+require './config/general'
 require './config/environment'
 require './config/helpers'
 require './lib/controllers'
-require 'coffee-script'
-require 'sass'
 
 map '/' do
 
