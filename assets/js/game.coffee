@@ -250,6 +250,8 @@ do_action = (str) ->
       if not current_game.ended
         current_game.ended = true
         current_game.show_endscreen()
+    when "timeout"
+      $("#waiting").html("<span>The server timedout because no players connected for too long time.</span>")
     when "count_down"
       countDown(3)
     when "update_con"
