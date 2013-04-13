@@ -57,7 +57,11 @@ class Connect
 
       socket.onclose = ->
         if not current_game.ended
-          alert("The connection to the server has been broken.")
+          if current_game.timeout
+            alert("The connection to the server has timedout.")
+          else
+            alert("The connection to the server has been broken.")
+          window.location = '/'
       
       return socket
     catch exception
@@ -74,6 +78,7 @@ parse_action = (str) ->
 #The game variables
 class Game
   constructor: () ->
+    @timeout = false
     @ended = false
     @collected_msg = ""
     @message = $("#cover-all")
@@ -251,7 +256,7 @@ do_action = (str) ->
         current_game.ended = true
         current_game.show_endscreen()
     when "timeout"
-      $("#waiting").html("<span>The server timedout because no players connected for too long time.</span>")
+      current_game.timeout = true
     when "count_down"
       countDown(3)
     when "update_con"
