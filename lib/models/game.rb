@@ -10,6 +10,7 @@ class Game
   property :finnished, Boolean, :required => true, :default => false
   
   def self.generate_game!
+    puts "Generating game"
     game = Game.new
     game.code = (0...64).map{ ('a'..'z').to_a[rand(26)]}.join
     game.created_date = Time.now
@@ -22,15 +23,9 @@ class Game
   end
 
   def self.get_available_game
-    self.remove_old_games()
-    Game.first(:conditions => ['number_of_players != maximum_players']) 
+    Game.first(:conditions => ['number_of_players < maximum_players']) 
   end
 
-  def self.remove_old_games
-    old_games = Game.all(:conditions => ['number_of_players >= maximum_players AND created_date < ?', (Time.now - 120)]) 
-    old_games.destroy if old_games
-  end
-  
   def self.new_port
     total_ports = Array ($config[:first_port]..$config[:last_port])
     current_ports = Game.all(:fields => [:port]).map{|game| game.port}
@@ -51,6 +46,7 @@ class Game
   def join!
     return false if self.number_of_players >= self.maximum_players
     new_number = self.number_of_players + 1
+    # TODO set wait time if game is full
     return self.update(:number_of_players => new_number, :created_date => Time.now )
   end
 
