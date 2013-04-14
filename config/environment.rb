@@ -1,5 +1,6 @@
 #encoding: utf-8
 # Show the current server environment on startup
+$config = {}
 if ENV['RACK_ENV']
   puts "[configuration] RACK_ENV : " + ENV['RACK_ENV']
 end
