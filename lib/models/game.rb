@@ -8,7 +8,7 @@ class Game
   property :maximum_players, Integer, :required => true, :default => 2
   property :waittime, Float, :required => true, :default => 0
   property :finnished, Boolean, :required => true, :default => false
-
+  
   def self.generate_game!
     game = Game.new
     game.code = (0...64).map{ ('a'..'z').to_a[rand(26)]}.join
