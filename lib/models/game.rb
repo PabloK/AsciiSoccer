@@ -66,4 +66,8 @@ class Game
     Game.avg(:waittime, :conditions => ['created_date >= ?', 10.minutes.ago])
   end
 
+  def full?
+    return @maximum_players == @number_of_players
+  end
+
 end
