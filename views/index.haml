@@ -18,7 +18,7 @@
           %span :
           %span="#{User.users_online}"
         .info
-          %span.data mean wait (min)
+          %span.data mean wait (seconds)
           %span :
           %span="#{Game.mean_wait}"
         .info
@@ -32,11 +32,11 @@
         .info
           %span.data server status
           %span : 
-          %span alive
+          %span unkown
         .info
           %span.data league end (days)
           %span : 
-          %span 21
+          %span N/A
 -if session[:user]
   .row
     .col12

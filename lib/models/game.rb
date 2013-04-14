@@ -13,7 +13,7 @@ class Game
     puts "Generating game"
     game = Game.new
     game.code = (0...64).map{ ('a'..'z').to_a[rand(26)]}.join
-    game.created_date = Time.now
+    game.created_date = DateTime.now
     game.port = new_port
     if game.port and game.save
       return game
@@ -23,7 +23,13 @@ class Game
   end
 
   def self.get_available_game
+    self.remove_old_games()
     Game.first(:conditions => ['number_of_players < maximum_players']) 
+  end
+
+  def self.remove_old_games
+    old_games = Game.all(:conditions => ['created_date < ?', (Time.now - 210)]) 
+    old_games.destroy if old_games
   end
 
   def self.new_port
@@ -46,8 +52,11 @@ class Game
   def join!
     return false if self.number_of_players >= self.maximum_players
     new_number = self.number_of_players + 1
-    # TODO set wait time if game is full
-    return self.update(:number_of_players => new_number, :created_date => Time.now )
+    updated_waittime = 0
+    if new_number == self.maximum_players
+      updated_waittime = (DateTime.now.to_time - self.created_date.to_time).to_f
+    end
+    return self.update(:number_of_players => new_number, :waittime => updated_waittime)
   end
 
   def self.current_games
@@ -59,7 +68,9 @@ class Game
   end
 
   def self.mean_wait
-    Game.avg(:waittime, :conditions => ['created_date >= ?', 10.minutes.ago])
+    mean = Game.avg(:waittime, :conditions => ['finnished = TRUE AND created_date > ?', 10.minutes.ago])
+    return mean.round(1) if mean
+    return nil
   end
 
   def full?
