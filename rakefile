@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'data_mapper'
+require './config/global'
 require './config/environment'
 require './lib/models'
 require 'dm-migrations'
