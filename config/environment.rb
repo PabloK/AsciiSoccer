@@ -5,7 +5,7 @@ if ENV['RACK_ENV']
 end
 
 if ENV['RACK_ENV'] == 'production'
-  $config[:host] = "ws://109.74.8.60:8080/"
+  $config[:host] = "ws://asciisoccer.cloudapp.net:8080"
 end
 
 if ENV['RACK_ENV'] == 'development'
