@@ -45,7 +45,8 @@ class Connect
     try
       unless /^40[0-9]{2}$/g.test(port)
         throw "Port outside server port range"
-      host = server+ port
+      console.log(server)
+      host = server + port
       socket = new WebSocket(host)
       socket.onopen = ->
 
