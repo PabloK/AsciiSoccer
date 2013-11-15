@@ -232,6 +232,7 @@ countDown = (int) ->
 #Execute actions from the server as they arrive
 do_action = (str) ->
   tempAction = new parse_action(str)
+  console.log(tempAction)
   switch tempAction.type
     when "chose"
       #TODO lookup has to be sent to the server to verify the user id
