@@ -1,10 +1,21 @@
+# Extrnal requirements / gems
+require 'rubygems'
+require 'active_support/core_ext/numeric/time'
+require 'active_support/core_ext/date_time/calculations'
 require 'sinatra/base'
-require 'data_mapper'
 require 'sinatra/flash'
-require './config/general'
-require './config/environment'
+require 'data_mapper'
+require 'pony'
+require 'coffee-script'
+require 'sass'
+
+# Internal requirements
 require './lib/models'
 require 'dm-migrations'
+require './config/general'
+require './config/environment'
+require './config/helpers'
+require './lib/controllers'
 
 desc "Recreate database from DataMapper model"
 task :rebuild do
