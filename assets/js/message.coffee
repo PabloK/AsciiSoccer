@@ -19,7 +19,6 @@ closeMessage = ()->
 
 submitForm = (formName, action) ->
   form = $(formName)
-  console.log(form)
   form.attr("action", action)
   form.submit()
   return false
