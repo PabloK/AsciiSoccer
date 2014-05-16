@@ -5,7 +5,7 @@ class Game
   property :code, String,  :required => true 
   property :number_of_players, Integer, :required => true, :default => 0
   property :created_date, DateTime, :required => true
-  property :maximum_players, Integer, :required => true, :default => 4
+  property :maximum_players, Integer, :required => true, :default => 8 
   property :waittime, Float, :required => true, :default => 0
   property :finnished, Boolean, :required => true, :default => false
   
