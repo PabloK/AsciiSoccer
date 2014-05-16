@@ -264,7 +264,7 @@ do_action = (str) ->
       players_left_to_connect = current_game.maximum_players - parseInt(tempAction.data[0])
       $("#waiting").html("<span>Waiting for " + players_left_to_connect + " players to connect...</span>")
     else
-
+  tempAction = null
 #The game variables
 current_game = undefined
 canvas = undefined
